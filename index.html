@@ -988,6 +988,19 @@ button[onclick="authTab('reset')"]{display:none!important}
   #qraCalcStage2 .qraStageTop{margin-bottom:6px!important}
   #qraCalcStage2 .qraConfirmCalculate{min-height:44px!important}
 }
+
+/* QRA V4.8 — RESULTADO EM PORTAL INDEPENDENTE DO WIZARD */
+.qraResultPortal{position:fixed!important;inset:0!important;z-index:1000!important;background:#070b10!important;overflow-y:auto!important;overscroll-behavior:contain!important;-webkit-overflow-scrolling:touch!important;padding:calc(10px + env(safe-area-inset-top)) 12px calc(26px + env(safe-area-inset-bottom))!important}
+.qraResultPortal.hide{display:none!important}
+.qraResultPortal.on{display:block!important}
+.qraResultPortalTop{position:sticky;top:0;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 2px 10px;background:linear-gradient(180deg,#070b10 75%,rgba(7,11,16,0))}
+.qraResultPortalTitle{min-width:0}.qraResultPortalTitle span{display:block;color:#ff8530;font-size:10px;letter-spacing:1.7px;font-weight:900}.qraResultPortalTitle b{display:block;color:#fff;font-size:18px;line-height:1.1;margin-top:2px}
+.qraResultPortalClose{display:none}
+.qraResultPortalInner{max-width:600px;margin:0 auto}
+.qraResultPortal #res{display:block!important;visibility:visible!important;opacity:1!important;margin:0!important;position:relative!important;z-index:1!important}
+.qraResultPortal #res.hide{display:block!important}
+body.qraResultPortalOpen{overflow:hidden!important}
+
 @media (min-width:700px){main{max-width:640px;margin:0 auto!important}.qraCalcShell,.qraProfileShell,.qraHistoryShell{max-width:600px;margin:0 auto}}
 @media (max-width:390px){.qraScreenIntro h2{font-size:26px!important}.qraOperationCard>summary b{max-width:190px}.qraVoiceRow{align-items:flex-start;flex-direction:column}.qraVoiceRow p{display:none}.qraCalcIntro{display:block}.qraCalcIntro #creditosInfo{text-align:left;max-width:none;margin-top:6px!important}.qraMoneyInput input{font-size:25px!important}}
 
@@ -1178,6 +1191,15 @@ button[onclick="authTab('reset')"]{display:none!important}
       <button class="btn sec" onclick="fecharTermoBanco()">Fechar</button>
       <button class="btn" onclick="aceitarTermoBanco()">Aceito e autorizo</button>
     </div>
+  </div>
+</div>
+
+<div id="qraResultPortal" class="qraResultPortal hide" aria-live="polite">
+  <div class="qraResultPortalInner">
+    <div class="qraResultPortalTop">
+      <div class="qraResultPortalTitle"><span>QRA FRETE</span><b>Resultado do frete</b></div>
+    </div>
+    <div id="qraResultMount"></div>
   </div>
 </div>
 <nav class="tabs"><button class="tab on" onclick="go('Calc',this)"><span class="tabIco">🧮</span><span>Calcular</span></button><button class="tab" onclick="go('Hist',this)"><span class="tabIco">🕘</span><span>Histórico</span></button><button class="tab" onclick="go('Cad',this)"><span class="tabIco">👤</span><span>Perfil</span></button><div class="homeIndicator"><span></span></div></nav></div>
@@ -1791,6 +1813,7 @@ async function route(cidades,mode){let coords=[];for(const c of cidades)coords.p
 function toggleAlto(){$('altoBox').classList.toggle('hide',$('alto').value!=='sim');updateEixosHint()}function altoOK(){return $('alto').value!=='sim'||[...document.querySelectorAll('.req')].every(x=>x.checked)}function tabela(){let a=$('alto').value==='sim',u=$('contrCalc').value==='unidade';return a&&u?'D':a&&!u?'C':!a&&u?'B':'A'}function coef(tab,carga,e){return jget(LS.antt,[]).find(r=>String(r.ativo).toLowerCase()!=='false'&&String(r.tabela).toUpperCase()===tab&&norm(r.tipo_carga)===norm(carga)&&Number(r.eixos)===Number(e))}function eixosDisponiveis(tab,carga){let arr=jget(LS.antt,[]).filter(r=>String(r.ativo).toLowerCase()!=='false'&&String(r.tabela).toUpperCase()===String(tab).toUpperCase()&&norm(r.tipo_carga)===norm(carga)).map(r=>Number(r.eixos)).filter(Boolean);return [...new Set(arr)].sort((a,b)=>a-b)}function updateEixosHint(){let h=$('eixosHint');if(!h||!$('carga'))return;let tab=tabela(),c=$('carga').value,e=Number($('eixosCalc').value||0),av=eixosDisponiveis(tab,c);if(!av.length){h.classList.remove('hide');h.innerHTML=`<b>Atenção:</b> não há coeficientes carregados para Tabela ${tab} e ${esc(c)}.`;return}if(e&&av.includes(e)){h.classList.add('hide');h.innerHTML='';return}h.classList.remove('hide');h.innerHTML=`<b>Combinação não disponível na ANTT carregada:</b> para Tabela ${tab} e ${esc(c)}, os eixos disponíveis são: <b>${av.join(', ')}</b>. Você informou <b>${e||'—'}</b> eixo(s). Ajuste o número de eixos ou escolha uma carga compatível.`}
 function calcANTT(kmR){let tab=tabela(),c=$('carga').value,e=Number($('eixosCalc').value||0),cf=coef(tab,c,e),av=eixosDisponiveis(tab,c);if(!cf)return{ok:false,tab,availableEixos:av,msg:av.length?`A tabela ANTT carregada não possui coeficiente para ${c} com ${e} eixos na Tabela ${tab}. Eixos disponíveis para esta carga/tabela: ${av.join(', ')}.`:`Sem coeficiente carregado para Tabela ${tab} e ${c}.`};let base=kmR*Number(cf.ccd)+Number(cf.cc),ret=$('retorno').value==='sim'?kmR*Number(cf.ccd)*0.92:0;return{ok:true,tab,total:base+ret,base,ret,ccd:Number(cf.ccd),cc:Number(cf.cc),versao:cf.versao}}
 function novoCalculo(){
+  try{window.qraFecharResultadoPortal&&window.qraFecharResultadoPortal()}catch(e){}
   sel.orig=null;
   sel.dests=[null];
   $('origIn').value='';
@@ -1802,7 +1825,7 @@ function novoCalculo(){
   window.qraLast=null;
   window.scrollTo({top:0,left:0,behavior:'instant'});
 }
-async function calcular(){try{const sessaoQRA=await qraSessaoAtiva();if(!sessaoQRA)throw Error('Sua sessão do QRA precisa ser renovada. Entre novamente uma única vez.');if(!sel.orig)throw Error('Selecione a origem.');if(!sel.dests[0])throw Error('Selecione o destino.');if(!altoOK())throw Error('Confirme os requisitos de alto desempenho ou marque operação normal.');let podeCalcular=false;try{const {data:okCred,error:errCred}=await sb.rpc('consumir_credito');if(errCred)throw errCred;podeCalcular=!!okCred}catch(errCred){console.warn('Falha ao checar créditos:',errCred);podeCalcular=true}if(!podeCalcular){$('res').classList.remove('hide');$('res').innerHTML='<h2>Seus créditos acabaram</h2><div class="notice badtxt">Você usou todos os cálculos disponíveis, ou eles venceram. Fale com o suporte para comprar mais créditos e continuar calculando.</div>';atualizarContadorCreditos();return}$('res').classList.remove('hide');$('res').innerHTML='<h2>Calculando...</h2><p class="mut">Consultando Geoapify e motor ANTT.</p>';let e=Number($('eixosCalc').value||0),carga=$('carga').value,mode=geoMode(e,carga),kmR=0,desc='';if(Number.isInteger(e)&&e>=2&&e<=9){let pp=jget(LS.perfil,{});if(Number(pp.totalEixos||0)!==e){pp.totalEixos=e;jset(LS.perfil,pp);try{const {data:ss}=await sb.auth.getSession();const uid=ss?.session?.user?.id;if(uid)await sb.from('perfis').update({total_eixos:e}).eq('id',uid)}catch(ex){console.warn('Não foi possível salvar eixos padrão:',ex)}}}let rr=await route([sel.orig,sel.dests[0]],mode);kmR=rr.km;desc=`${fmt(sel.orig)} → ${fmt(sel.dests[0])}`;let antt=calcANTT(kmR),valor=br($('valor').value),diff=antt.ok&&valor>0?valor-antt.total:null;let versaoTxt=antt.versao==='RESOLUCAO_ANTT_6084_2026'?'Resolução ANTT 6.084/2026':(antt.versao||'sem versão');let anttHTML=antt.ok?`<div class="metric"><span>Tabela aplicada</span><span>${antt.tab} • ${esc(versaoTxt)}</span></div><div class="metric"><span>Frete mínimo ANTT estimado</span><span>${money(antt.total)}</span></div>${valor>0?`<div class="metric"><span>Valor oferecido</span><span>${money(valor)}</span></div><div class="metric"><span>Diferença vs. mínimo</span><span class="${diff>=0?'oktxt':'badtxt'}">${money(diff)}</span></div>`:''}<div class="metric"><span>CCD / CC</span><span>${antt.ccd} / ${money(antt.cc)}</span></div>`:`<div class="notice badtxt"><b>ANTT não calculada:</b> ${esc(antt.msg)}<br>Não é erro da API de KM. É uma combinação de carga/eixos/tabela que não existe na base ANTT carregada.</div>`;let status='';if(antt.ok&&valor>0){status=diff>=0?'<div class="status ok">Valor oferecido está acima do piso estimado.</div>':'<div class="status bad">Cuidado: valor oferecido está abaixo do piso ANTT estimado.</div>'}window.qraLast={desc,km:kmR,eixos:e,carga,mode,antt,valor};try{await loadBankConfigFromSupabase()}catch(errBc){console.warn('Não foi possível atualizar config do banco:',errBc)}let ofertasHTML=await buscarOfertasGeraisHTML();$('res').innerHTML=`<h2>Frete mínimo</h2><p class="mut">${esc(desc)}</p><div class="big">${km(kmR)}</div><span class="pill"><b>Eixos:</b>&nbsp;${e}</span><span class="pill"><b>Carga:</b>&nbsp;${esc(carga)}</span><h3>ANTT</h3>${anttHTML}${status}<div class="qraResultPrimaryActions"><button type="button" class="btn sec" onclick="abrirCustoReal()">💰 VER MEU CUSTO REAL</button><button type="button" class="btn sec" onclick="novoCalculo()">↻ NOVO FRETE</button></div><div id="custoBox" class="card flat hide" style="margin-top:12px"><h3>Meu custo real</h3><label>Valor aproximado atual do seu caminhão (R$)</label><input id="valorVeiculo" inputmode="decimal" placeholder="Ex.: 450000,00" onchange="salvarPreferenciasCustoReal()"><p class="mut" id="fipeStatus" style="font-size:11px;margin-top:5px">Informe uma vez. O QRA salva esse valor para os próximos cálculos.</p><div class="row"><div><label>Quantidade de pneus</label><input id="qtdPneus" inputmode="numeric" placeholder="Automático pelos eixos"><p class="mut" id="pneusStatus" style="font-size:10px;margin-top:4px"></p></div><div><label>Valor médio do pneu (R$)</label><input id="valorPneu" inputmode="decimal" placeholder="Ex.: 2200,00" onchange="salvarPreferenciasCustoReal()"></div></div><div class="row"><div><label>Diesel R$/L</label><input id="diesel" inputmode="decimal" placeholder="Ex.: 6,10" onchange="salvarPreferenciasCustoReal()"></div><div><label>Consumo médio km/L</label><input id="consumo" inputmode="decimal" placeholder="Ex.: 2,30" onchange="salvarPreferenciasCustoReal()"></div></div><button type="button" class="btn" style="margin-top:12px" onclick="calcularCustoReal()">CALCULAR MEU CUSTO →</button><div id="custoResultado"></div></div>${creditBannerHTML()}${ofertasHTML}`;window.qraExibirResultadoFinal();let h=jget(LS.hist,[]);h.unshift({dt:new Date().toISOString(),desc,km:kmR,valor,custo:null,cas:null,antt:antt.ok?antt.total:null,tabela:antt.tab});jset(LS.hist,h.slice(0,100));localStorage.setItem(LS.cons,String(Number(localStorage.getItem(LS.cons)||0)+1));regra();try{await sincronizarCalculoNoSupabase({desc,origem:fmt(sel.orig),destino:fmt(sel.dests[0]),km:kmR,carga,eixos:e,valor,antt})}catch(err){console.warn('Não foi possível sincronizar o cálculo no Supabase:',err)}atualizarContadorCreditos();}catch(e){$('res').classList.remove('hide');$('res').innerHTML=`<h2>Não foi possível calcular</h2><div class="notice badtxt">${esc(e.message)}</div>`}}
+async function calcular(){try{const sessaoQRA=await qraSessaoAtiva();if(!sessaoQRA)throw Error('Sua sessão do QRA precisa ser renovada. Entre novamente uma única vez.');if(!sel.orig)throw Error('Selecione a origem.');if(!sel.dests[0])throw Error('Selecione o destino.');if(!altoOK())throw Error('Confirme os requisitos de alto desempenho ou marque operação normal.');let podeCalcular=false;try{const {data:okCred,error:errCred}=await sb.rpc('consumir_credito');if(errCred)throw errCred;podeCalcular=!!okCred}catch(errCred){console.warn('Falha ao checar créditos:',errCred);podeCalcular=true}if(!podeCalcular){window.qraAbrirResultadoPortal();$('res').classList.remove('hide');$('res').innerHTML='<h2>Seus créditos acabaram</h2><div class="notice badtxt">Você usou todos os cálculos disponíveis, ou eles venceram. Fale com o suporte para comprar mais créditos e continuar calculando.</div>';atualizarContadorCreditos();return}window.qraAbrirResultadoPortal();$('res').classList.remove('hide');$('res').innerHTML='<h2>Calculando...</h2><p class="mut">Consultando Geoapify e motor ANTT.</p>';let e=Number($('eixosCalc').value||0),carga=$('carga').value,mode=geoMode(e,carga),kmR=0,desc='';if(Number.isInteger(e)&&e>=2&&e<=9){let pp=jget(LS.perfil,{});if(Number(pp.totalEixos||0)!==e){pp.totalEixos=e;jset(LS.perfil,pp);try{const {data:ss}=await sb.auth.getSession();const uid=ss?.session?.user?.id;if(uid)await sb.from('perfis').update({total_eixos:e}).eq('id',uid)}catch(ex){console.warn('Não foi possível salvar eixos padrão:',ex)}}}let rr=await route([sel.orig,sel.dests[0]],mode);kmR=rr.km;desc=`${fmt(sel.orig)} → ${fmt(sel.dests[0])}`;let antt=calcANTT(kmR),valor=br($('valor').value),diff=antt.ok&&valor>0?valor-antt.total:null;let versaoTxt=antt.versao==='RESOLUCAO_ANTT_6084_2026'?'Resolução ANTT 6.084/2026':(antt.versao||'sem versão');let anttHTML=antt.ok?`<div class="metric"><span>Tabela aplicada</span><span>${antt.tab} • ${esc(versaoTxt)}</span></div><div class="metric"><span>Frete mínimo ANTT estimado</span><span>${money(antt.total)}</span></div>${valor>0?`<div class="metric"><span>Valor oferecido</span><span>${money(valor)}</span></div><div class="metric"><span>Diferença vs. mínimo</span><span class="${diff>=0?'oktxt':'badtxt'}">${money(diff)}</span></div>`:''}<div class="metric"><span>CCD / CC</span><span>${antt.ccd} / ${money(antt.cc)}</span></div>`:`<div class="notice badtxt"><b>ANTT não calculada:</b> ${esc(antt.msg)}<br>Não é erro da API de KM. É uma combinação de carga/eixos/tabela que não existe na base ANTT carregada.</div>`;let status='';if(antt.ok&&valor>0){status=diff>=0?'<div class="status ok">Valor oferecido está acima do piso estimado.</div>':'<div class="status bad">Cuidado: valor oferecido está abaixo do piso ANTT estimado.</div>'}window.qraLast={desc,km:kmR,eixos:e,carga,mode,antt,valor};try{await loadBankConfigFromSupabase()}catch(errBc){console.warn('Não foi possível atualizar config do banco:',errBc)}let ofertasHTML=await buscarOfertasGeraisHTML();$('res').innerHTML=`<h2>Frete mínimo</h2><p class="mut">${esc(desc)}</p><div class="big">${km(kmR)}</div><span class="pill"><b>Eixos:</b>&nbsp;${e}</span><span class="pill"><b>Carga:</b>&nbsp;${esc(carga)}</span><h3>ANTT</h3>${anttHTML}${status}<div class="qraResultPrimaryActions"><button type="button" class="btn sec" onclick="abrirCustoReal()">💰 VER MEU CUSTO REAL</button><button type="button" class="btn sec" onclick="novoCalculo()">↻ NOVO FRETE</button></div><div id="custoBox" class="card flat hide" style="margin-top:12px"><h3>Meu custo real</h3><label>Valor aproximado atual do seu caminhão (R$)</label><input id="valorVeiculo" inputmode="decimal" placeholder="Ex.: 450000,00" onchange="salvarPreferenciasCustoReal()"><p class="mut" id="fipeStatus" style="font-size:11px;margin-top:5px">Informe uma vez. O QRA salva esse valor para os próximos cálculos.</p><div class="row"><div><label>Quantidade de pneus</label><input id="qtdPneus" inputmode="numeric" placeholder="Automático pelos eixos"><p class="mut" id="pneusStatus" style="font-size:10px;margin-top:4px"></p></div><div><label>Valor médio do pneu (R$)</label><input id="valorPneu" inputmode="decimal" placeholder="Ex.: 2200,00" onchange="salvarPreferenciasCustoReal()"></div></div><div class="row"><div><label>Diesel R$/L</label><input id="diesel" inputmode="decimal" placeholder="Ex.: 6,10" onchange="salvarPreferenciasCustoReal()"></div><div><label>Consumo médio km/L</label><input id="consumo" inputmode="decimal" placeholder="Ex.: 2,30" onchange="salvarPreferenciasCustoReal()"></div></div><button type="button" class="btn" style="margin-top:12px" onclick="calcularCustoReal()">CALCULAR MEU CUSTO →</button><div id="custoResultado"></div></div>${creditBannerHTML()}${ofertasHTML}`;window.qraExibirResultadoFinal();let h=jget(LS.hist,[]);h.unshift({dt:new Date().toISOString(),desc,km:kmR,valor,custo:null,cas:null,antt:antt.ok?antt.total:null,tabela:antt.tab});jset(LS.hist,h.slice(0,100));localStorage.setItem(LS.cons,String(Number(localStorage.getItem(LS.cons)||0)+1));regra();try{await sincronizarCalculoNoSupabase({desc,origem:fmt(sel.orig),destino:fmt(sel.dests[0]),km:kmR,carga,eixos:e,valor,antt})}catch(err){console.warn('Não foi possível sincronizar o cálculo no Supabase:',err)}atualizarContadorCreditos();}catch(e){window.qraAbrirResultadoPortal();$('res').classList.remove('hide');$('res').innerHTML=`<h2>Não foi possível calcular</h2><div class="notice badtxt">${esc(e.message)}</div>`}}
 async function sincronizarCalculoNoSupabase({desc,origem,destino,km,carga,eixos,valor,antt}){
   const {data:sessionData}=await sb.auth.getSession();
   const uid=sessionData?.session?.user?.id;
@@ -2205,6 +2228,7 @@ if('serviceWorker' in navigator){
   }
 
   window.qraExibirResultadoFinal=function(){
+    window.qraAbrirResultadoPortal();
     const res=document.getElementById('res');
     const calc=document.getElementById('sCalc');
     const a=document.getElementById('qraCalcStage1');
@@ -2231,6 +2255,25 @@ if('serviceWorker' in navigator){
       const y=Math.max(0,c.getBoundingClientRect().top+window.scrollY-82);
       window.scrollTo({top:y,left:0,behavior:'auto'});
     }));
+  };
+
+
+  window.qraAbrirResultadoPortal=function(){
+    const portal=document.getElementById('qraResultPortal');
+    const mount=document.getElementById('qraResultMount');
+    const res=document.getElementById('res');
+    if(!portal||!mount||!res)return;
+    if(res.parentElement!==mount)mount.appendChild(res);
+    res.classList.remove('hide');
+    res.style.display='block';res.style.visibility='visible';res.style.opacity='1';
+    portal.classList.remove('hide');portal.classList.add('on');
+    document.body.classList.add('qraResultPortalOpen');
+    portal.scrollTop=0;
+  };
+  window.qraFecharResultadoPortal=function(){
+    const portal=document.getElementById('qraResultPortal');
+    if(portal){portal.classList.remove('on');portal.classList.add('hide');portal.scrollTop=0;}
+    document.body.classList.remove('qraResultPortalOpen');
   };
 
   function qraDecorateCost(){
@@ -2278,6 +2321,7 @@ if('serviceWorker' in navigator){
   let qraStageTimer=null;
   window.qraCalcGoStage=function(n){
     n=Number(n);
+    if(n!==3)try{window.qraFecharResultadoPortal&&window.qraFecharResultadoPortal()}catch(e){}
     if(n!==2&&n!==3)n=1;
     qraCalcStage=n;
     const calc=document.getElementById('sCalc');
