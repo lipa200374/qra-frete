@@ -795,8 +795,7 @@ main{padding:12px 12px 6px!important}
 
 .qraCalcStage{display:none}
 .qraCalcStage.on{display:block;animation:qraStageIn .24s ease-out}
-#qraCalcStage2{padding-bottom:118px!important}
-@media (max-height:760px){#qraCalcStage2{padding-bottom:132px!important}}
+#qraCalcStage2{padding-bottom:6px!important}
 @keyframes qraStageIn{from{opacity:.15;transform:translateX(14px)}to{opacity:1;transform:none}}
 .qraStageTop{display:flex;gap:10px;align-items:center;margin:0 3px 8px}
 .qraStageBack{width:42px;height:42px;flex:0 0 42px;border-radius:14px;border:1px solid rgba(255,255,255,.10);background:rgba(15,22,31,.92)!important;color:#fff;font-size:22px;font-weight:900;box-shadow:inset 0 1px 0 rgba(255,255,255,.04),0 10px 24px rgba(0,0,0,.16)}
@@ -805,6 +804,13 @@ main{padding:12px 12px 6px!important}
 .qraStageTop p{margin:2px 0 0!important;font-size:10px!important;color:#7e91a2!important}
 #qraCalcStage1 .qraOfferCard{margin-bottom:0!important}
 .qraCalcShell.qraStageTwo .qraCalcIntro{display:none}
+/* V4.6: modo de resultado determinístico */
+#sCalc.qraResultMode .qraCalcIntro,
+#sCalc.qraResultMode #qraCalcStage1,
+#sCalc.qraResultMode #qraCalcStage2{display:none!important}
+#sCalc.qraResultMode #res{display:block!important;visibility:visible!important;opacity:1!important;position:relative!important;z-index:3!important;margin-top:4px!important}
+#sCalc.qraResultMode{display:block!important}
+
 .qraConfirmTop{margin-bottom:10px!important}
 .qraConfirmCard{padding:14px!important;margin:0 0 10px!important;background:linear-gradient(180deg,rgba(255,106,0,.045),rgba(255,255,255,.018)),var(--qra-card)!important;border:1px solid rgba(255,255,255,.085)!important}
 .qraConfirmTruck{display:grid;grid-template-columns:42px 1fr 28px;gap:11px;align-items:center}
@@ -827,14 +833,14 @@ main{padding:12px 12px 6px!important}
 
 .qraInlineChoices{padding:4px 0 6px!important;margin-bottom:6px!important;background:transparent!important;border:0!important;box-shadow:none!important}
 .qraInlineChoices>summary{display:none!important}
-.qraInlineChoices .qraAdvancedBody{padding:0!important;display:grid!important;gap:6px!important}
-.qraChoiceField{background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02)),#0f1721!important;border:1px solid rgba(122,148,173,.15)!important;border-radius:18px!important;padding:6px 12px 7px!important;min-height:42px!important;display:flex!important;flex-direction:column!important;justify-content:center!important;position:relative!important;cursor:pointer!important;transition:transform .12s ease,border-color .12s ease,box-shadow .12s ease!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 8px 18px rgba(0,0,0,.10)!important}.qraChoiceField:active{transform:scale(.995)}.qraChoiceField:focus-within{border-color:rgba(255,122,24,.36)!important;box-shadow:0 0 0 3px rgba(255,106,0,.08)!important, inset 0 1px 0 rgba(255,255,255,.035),0 8px 18px rgba(0,0,0,.10)!important}.qraChoiceField.isSelect::after{content:"⌄";position:absolute;right:13px;top:50%;transform:translateY(-3px);font-size:16px;font-weight:900;color:#f5f7fa;pointer-events:none;opacity:.9}
+.qraInlineChoices .qraAdvancedBody{padding:0!important;display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:6px!important}.qraInlineChoices .qraChoiceField.qraFull{grid-column:1 / -1!important}.qraInlineChoices #eixosHint{grid-column:1 / -1!important}
+.qraChoiceField{background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02)),#0f1721!important;border:1px solid rgba(122,148,173,.15)!important;border-radius:18px!important;padding:6px 12px 7px!important;min-height:46px!important;display:flex!important;flex-direction:column!important;justify-content:center!important;position:relative!important;cursor:pointer!important;transition:transform .12s ease,border-color .12s ease,box-shadow .12s ease!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 8px 18px rgba(0,0,0,.10)!important}.qraChoiceField:active{transform:scale(.995)}.qraChoiceField:focus-within{border-color:rgba(255,122,24,.36)!important;box-shadow:0 0 0 3px rgba(255,106,0,.08)!important, inset 0 1px 0 rgba(255,255,255,.035),0 8px 18px rgba(0,0,0,.10)!important}.qraChoiceField.isSelect::after{content:"⌄";position:absolute;right:13px;top:50%;transform:translateY(-3px);font-size:16px;font-weight:900;color:#f5f7fa;pointer-events:none;opacity:.9}
 .qraChoiceField label{margin:0 0 2px!important;font-size:9px!important;letter-spacing:.95px!important;color:#96adc3!important;font-weight:900!important}
-.qraChoiceField select,.qraChoiceField input{margin:0!important;border:0!important;background:transparent!important;box-shadow:none!important;padding:0 24px 0 0!important;min-height:20px!important;font-size:13px!important;font-weight:800!important;color:#fff!important;width:100%!important;cursor:pointer!important;line-height:1.12!important}.qraChoiceField select{-webkit-appearance:none!important;appearance:none!important;background-image:none!important}.qraChoiceField input[type="number"]{-moz-appearance:textfield;appearance:textfield}.qraChoiceField input[type="number"]::-webkit-outer-spin-button,.qraChoiceField input[type="number"]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}.qraChoiceField select option{background:#111820!important;color:#f6f8fb!important;font-weight:700!important;padding:10px!important}.qraChoiceField select option:checked{background:#27313d!important;color:#fff!important}
+.qraChoiceField select,.qraChoiceField input{margin:0!important;border:0!important;background:transparent!important;box-shadow:none!important;padding:0 24px 0 0!important;min-height:20px!important;font-size:14px!important;font-weight:800!important;color:#fff!important;width:100%!important;cursor:pointer!important;line-height:1.12!important}.qraChoiceField select{-webkit-appearance:none!important;appearance:none!important;background-image:none!important}.qraChoiceField input[type="number"]{-moz-appearance:textfield;appearance:textfield}.qraChoiceField input[type="number"]::-webkit-outer-spin-button,.qraChoiceField input[type="number"]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}.qraChoiceField select option{background:#111820!important;color:#f6f8fb!important;font-weight:700!important;padding:10px!important}.qraChoiceField select option:checked{background:#27313d!important;color:#fff!important}
 .qraChoiceField input{padding-right:0!important}
 .qraChoiceField select:focus,.qraChoiceField input:focus{outline:none!important}
 .qraInlineChoices #altoBox{margin:0!important;border-radius:16px!important}
-.qraConfirmCalculate{min-height:42px!important;font-size:13px!important;margin-top:0!important;border-radius:16px!important;box-shadow:0 14px 28px rgba(255,106,0,.20)!important}
+.qraConfirmCalculate{min-height:46px!important;font-size:13px!important;margin-top:0!important;border-radius:16px!important;box-shadow:0 14px 28px rgba(255,106,0,.20)!important}
 @media(min-height:760px){.qraChoiceField{min-height:46px!important}.qraInlineChoices .qraAdvancedBody{gap:7px!important}}
 .qraOperationCard{padding:0!important;overflow:visible;margin:0 0 11px!important}
 .qraOperationCard>summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
@@ -969,6 +975,16 @@ button[onclick="authTab('reset')"]{display:none!important}
 @media(max-width:360px){.qraOnboardPlateRow{grid-template-columns:1fr 105px}.qraAxleGrid{gap:6px}.qraAxleBtn{min-height:43px}}
 
 .qraSimpleProfileShell{padding-bottom:16px}.qraSimpleProfileCard{padding:16px!important}.qraSimpleProfileCard label{font-size:10px!important;margin-top:10px!important}.qraSimpleProfileInfo{margin-top:10px!important}.qraSimpleProfileInfo h3{margin-top:0!important}
+
+@media(max-width:430px){
+  #qraCalcStage2 .qraInlineChoices .qraAdvancedBody{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:6px!important}
+  #qraCalcStage2 .qraChoiceField{min-height:44px!important;padding:6px 10px 7px!important}
+  #qraCalcStage2 .qraChoiceField label{font-size:8.5px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+  #qraCalcStage2 .qraChoiceField select,#qraCalcStage2 .qraChoiceField input{font-size:13px!important;min-height:20px!important}
+  #qraCalcStage2 .qraChoiceField.qraHalf select,#qraCalcStage2 .qraChoiceField.qraHalf input{font-size:14px!important}
+  #qraCalcStage2 .qraStageTop{margin-bottom:6px!important}
+  #qraCalcStage2 .qraConfirmCalculate{min-height:44px!important}
+}
 @media (min-width:700px){main{max-width:640px;margin:0 auto!important}.qraCalcShell,.qraProfileShell,.qraHistoryShell{max-width:600px;margin:0 auto}}
 @media (max-width:390px){.qraScreenIntro h2{font-size:26px!important}.qraOperationCard>summary b{max-width:190px}.qraVoiceRow{align-items:flex-start;flex-direction:column}.qraVoiceRow p{display:none}.qraCalcIntro{display:block}.qraCalcIntro #creditosInfo{text-align:left;max-width:none;margin-top:6px!important}.qraMoneyInput input{font-size:25px!important}}
 
@@ -1100,24 +1116,24 @@ button[onclick="authTab('reset')"]{display:none!important}
       <details class="card qraOperationCard qraEditableOperation qraInlineChoices" id="qraOperationDetails" open>
         <summary aria-hidden="true"><span></span></summary>
         <div class="qraAdvancedBody">
-          <div class="qraChoiceField isSelect">
+          <div class="qraChoiceField isSelect qraFull">
             <label for="carga">TIPO DE CARGA</label>
             <select id="carga"></select>
           </div>
-          <div class="qraChoiceField isInput">
+          <div class="qraChoiceField isInput qraHalf">
             <label for="eixosCalc">TOTAL DE EIXOS</label>
-            <input id="eixosCalc" type="number" min="2" max="12">
+            <input id="eixosCalc" type="number" min="2" max="9">
+          </div>
+          <div class="qraChoiceField isSelect qraHalf">
+            <label for="retorno">RETORNO VAZIO?</label>
+            <select id="retorno"><option value="nao">Não</option><option value="sim">Sim</option></select>
           </div>
           <div id="eixosHint" class="notice hide"></div>
-          <div class="qraChoiceField isSelect">
+          <div class="qraChoiceField isSelect qraFull">
             <label for="contrCalc">CONTRATAÇÃO</label>
             <select id="contrCalc"><option value="conjunto">Conjunto completo / caminhão completo</option><option value="unidade">Só unidade de tração</option></select>
           </div>
-          <div class="qraChoiceField isSelect">
-            <label for="retorno">RETORNO VAZIO INCLUÍDO?</label>
-            <select id="retorno"><option value="nao">Não</option><option value="sim">Sim</option></select>
-          </div>
-          <div class="qraChoiceField isSelect">
+          <div class="qraChoiceField isSelect qraFull">
             <label for="alto">ALTO DESEMPENHO</label>
             <select id="alto" onchange="toggleAlto()"><option value="nao">Não / operação normal</option><option value="sim">Sim, está no contrato</option></select>
           </div>
@@ -2185,20 +2201,24 @@ if('serviceWorker' in navigator){
 
   window.qraExibirResultadoFinal=function(){
     const res=document.getElementById('res');
-    if(!res)return;
+    const calc=document.getElementById('sCalc');
+    if(!res||!calc)return;
     try{if(typeof hideAuth==='function')hideAuth()}catch(e){}
     document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
-    document.getElementById('sCalc')?.classList.add('on');
+    calc.classList.add('on','qraResultMode');
     document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
     const tabs=document.querySelectorAll('.tab');if(tabs[0])tabs[0].classList.add('on');
     document.getElementById('qraCalcStage1')?.classList.remove('on');
     document.getElementById('qraCalcStage2')?.classList.remove('on');
     document.querySelector('.qraCalcShell')?.classList.remove('qraStageTwo');
     res.classList.remove('hide');
+    res.style.display='block';
+    res.style.visibility='visible';
+    res.style.opacity='1';
     qraDecorateResult();
     requestAnimationFrame(()=>requestAnimationFrame(()=>{
-      const y=Math.max(0,res.getBoundingClientRect().top+window.scrollY-76);
-      window.scrollTo({top:y,left:0,behavior:'smooth'});
+      const y=Math.max(0,res.getBoundingClientRect().top+window.scrollY-82);
+      window.scrollTo({top:y,left:0,behavior:'auto'});
     }));
   };
 
@@ -2248,7 +2268,10 @@ if('serviceWorker' in navigator){
   window.qraCalcGoStage=function(n){
     n=Number(n)===2?2:1;
     qraCalcStage=n;
+    const calc=document.getElementById('sCalc');
+    if(calc)calc.classList.remove('qraResultMode');
     const a=document.getElementById('qraCalcStage1'),b=document.getElementById('qraCalcStage2'),res=document.getElementById('res');
+    if(res){res.style.display='';res.style.visibility='';res.style.opacity=''}
     if(a)a.classList.toggle('on',n===1);
     if(b)b.classList.toggle('on',n===2);
     document.querySelector('.qraCalcShell')?.classList.toggle('qraStageTwo',n===2);
