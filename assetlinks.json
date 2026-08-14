@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "app.vercel.qrafretevercel_25.twa",
+        "sha256_cert_fingerprints": ["7D:5A:AA:7E:29:9F:37:37:71:98:35:B6:56:EC:B2:97:EA:63:60:E1:72:6A:C7:FA:60:5E:39:D5:FA:79:D0:9B"]
+      }
+    }]
