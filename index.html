@@ -910,7 +910,7 @@ body.qraCostOpen{overflow:hidden!important}
 #custoBox label{font-size:10px!important;color:#9aaaba!important;margin-top:16px!important}
 #custoBox input{min-height:48px!important}
 #custoResultado:empty{display:none!important}
-#custoResultado{margin-top:18px!important;padding:20px 18px!important;background:#0f141b!important;border:1px solid rgba(255,255,255,.06)!important;border-radius:22px!important;text-align:center!important;position:relative;overflow:hidden}
+#custoResultado{margin-top:18px!important;padding:20px 18px!important;background:#0f141b!important;border:1px solid rgba(255,255,255,.06)!important;border-radius:22px!important;text-align:center!important;position:relative;overflow:hidden;zoom:.9}
 #custoResultado:before{content:'';position:absolute;top:0;left:20%;right:20%;height:2px;background:linear-gradient(90deg,transparent,#ff8a00,transparent)}
 #custoResultado>h3{font-size:10px!important;text-transform:uppercase;letter-spacing:2px;color:#7c8b9a!important;font-weight:800!important;margin:2px 0 14px!important}
 #custoResultado>.metric:not(.qraCascalhoHero){display:flex!important;justify-content:space-between!important;align-items:baseline!important;text-align:left!important;padding:11px 0!important;margin:0!important;background:none!important;border:0!important;border-radius:0!important;border-bottom:1px solid rgba(255,255,255,.055)!important;font-size:13.5px!important}
@@ -2006,6 +2006,7 @@ function calcularCustoReal(){
   let cls=cas>0?'oktxt':'badtxt',st=cas>0?'<div class="status ok">Frete deixa cascalho no bolso.</div>':'<div class="status bad">Prejuízo estimado: não sobra cascalho.</div>';
   $('custoResultado').innerHTML=`<h3>Resultado financeiro</h3><div class="metric"><span>Frete oferecido</span><span>${money(valor)}</span></div><div class="metric"><span>Dias estimados de viagem</span><span>${dias}</span></div><div class="metric"><span>Custo diesel</span><span>${money(cDiesel)}</span></div><div class="metric"><span>Custo de capital (veículo)</span><span>${money(capitalViagem)}</span></div><div class="metric"><span>Salário + encargos</span><span>${money(salarioViagem)}</span></div><div class="metric"><span>Desgaste de pneu</span><span>${money(custoPneu)}</span></div><div class="metric"><span>Custo total estimado</span><span>${money(custo)}</span></div><div class="metric"><span>Cascalho no bolso</span><span class="${cls}">${money(cas)}</span></div>${st}<div class="qraResultPrimaryActions" style="margin-top:16px"><button type="button" class="btn sec" onclick="fecharCustoReal()">← Voltar pro resultado</button><button type="button" class="btn sec" onclick="fecharCustoRealENovo()">↻ NOVO FRETE</button></div>`;
   let h=jget(LS.hist,[]);if(h.length&&h[0].desc===l.desc&&Math.abs(h[0].km-l.km)<.1){h[0].custo=custo;h[0].cas=cas;jset(LS.hist,h)}
+  setTimeout(()=>$('custoResultado').scrollIntoView({behavior:'smooth',block:'start'}),40);
 }
 function fecharCustoReal(){const b=$('custoBox');if(b){b.classList.add('hide');document.body.classList.remove('qraCostOpen')}}
 function fecharCustoRealENovo(){fecharCustoReal();if(typeof novoCalculo==='function')novoCalculo()}
