@@ -446,8 +446,6 @@ header{
   top:0;
   z-index:25;
   backdrop-filter: blur(10px);
-  max-width:480px;
-  margin:0 auto;
 }
 .head{
   gap:12px !important;
@@ -964,11 +962,6 @@ body.qraCostOpen{overflow:hidden!important}
 
 /* HISTÓRICO */
 .qraHistoryShell{max-width:620px;margin:0 auto}.qraHistoryList .hist{border-radius:18px!important;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.012)),#0d141c!important;border:1px solid rgba(255,255,255,.07)!important;padding:14px!important;margin-bottom:9px!important}.qraHistoryList .hist>b{font-size:13px;color:#eef4f8}.qraHistoryList .hist p{font-size:9px!important;margin:4px 0 8px!important}.qraHistoryList .metric{font-size:11px!important}.qraClearHistory{margin-top:12px!important;opacity:.74;min-height:44px!important}
-.histTop{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.histTop>b{flex:1 1 auto;min-width:0;overflow-wrap:anywhere}
-.histBadge{flex:0 0 auto;padding:4px 11px;border-radius:999px;font-size:10.5px;font-weight:800;letter-spacing:.2px;white-space:nowrap}
-.histBadge.ok{background:rgba(48,209,132,.16);color:#8fe8b8;border:1px solid rgba(48,209,132,.4)}
-.histBadge.bad{background:rgba(255,99,99,.16);color:#ffb3b3;border:1px solid rgba(255,99,99,.4)}
 
 /* Remove recuperação incompleta da experiência publicada */
 button[onclick="authTab('reset')"]{display:none!important}
@@ -1034,6 +1027,386 @@ body.qraResultPortalOpen{overflow:hidden!important}
 
 @media (min-width:700px){main{max-width:640px;margin:0 auto!important}.qraCalcShell,.qraProfileShell,.qraHistoryShell{max-width:600px;margin:0 auto}}
 @media (max-width:390px){.qraScreenIntro h2{font-size:26px!important}.qraOperationCard>summary b{max-width:190px}.qraVoiceRow{align-items:flex-start;flex-direction:column}.qraVoiceRow p{display:none}.qraCalcIntro{display:block}.qraCalcIntro #creditosInfo{text-align:left;max-width:none;margin-top:6px!important}.qraMoneyInput input{font-size:25px!important}}
+
+
+
+/* === QRA PREMIUM RESPONSIVE FOUNDATION === */
+html,body{min-height:100%;min-height:100dvh}
+body{min-width:0!important}
+.authOverlay{min-height:100vh;min-height:100dvh;padding:max(14px,env(safe-area-inset-top)) clamp(14px,4vw,24px) max(14px,env(safe-area-inset-bottom))!important}
+.authBox{width:min(100%,460px)!important;max-width:460px!important;padding:clamp(18px,4.6vw,26px)!important;border-radius:clamp(22px,5vw,30px)!important}
+.authLogo{width:clamp(112px,31vw,168px)!important;max-width:52%!important;margin-bottom:clamp(6px,1.8vh,12px)!important}
+.authTitle{font-size:clamp(24px,7vw,30px)!important;line-height:1.04!important}
+.authSub{font-size:clamp(12px,3.3vw,14px)!important;margin-bottom:clamp(12px,2vh,18px)!important}
+.authBadge{margin-bottom:clamp(10px,2vh,16px)!important}
+#authOverlay input{min-height:clamp(44px,6.2vh,52px)!important;font-size:clamp(15px,4vw,17px)!important}
+#authOverlay .btn{min-height:clamp(46px,6.4vh,54px)!important;font-size:clamp(14px,4vw,16px)!important}
+.authTabs{gap:clamp(6px,2vw,10px)!important;margin:clamp(8px,1.5vh,12px) 0 clamp(10px,2vh,16px)!important}
+.authTabs button{padding:clamp(10px,1.7vh,13px)!important;font-size:clamp(13px,3.6vw,15px)!important}
+
+@media (max-width:699px){
+  .app{width:100%!important;max-width:none!important;margin:0!important;border-left:0!important;border-right:0!important;box-shadow:none!important}
+  .tabs{width:100%!important;max-width:none!important;left:0!important;transform:none!important}
+  main{width:100%!important;max-width:none!important}
+  .screen{padding-left:clamp(12px,4vw,20px)!important;padding-right:clamp(12px,4vw,20px)!important}
+}
+
+@media (min-width:430px) and (max-width:699px){
+  .authBox{max-width:500px!important}
+  .authLogo{max-width:46%!important}
+}
+
+@media (max-height:740px){
+  .authOverlay{align-items:flex-start!important;overflow:auto!important;padding-top:max(10px,env(safe-area-inset-top))!important}
+  .authBox{margin:auto 0!important;padding-top:16px!important;padding-bottom:16px!important}
+  .authLogo{width:108px!important;margin-bottom:4px!important}
+  .authTitle{font-size:23px!important;margin-top:4px!important}
+  .authSub{margin-bottom:10px!important}
+  .authTabs{margin:6px 0 10px!important}
+  #authOverlay input{min-height:44px!important}
+  #authOverlay .btn{min-height:46px!important}
+}
+
+@media (min-width:700px){
+  .app{width:100%!important;max-width:480px!important;margin:0 auto!important}
+  .tabs{width:480px!important;max-width:100%!important}
+}
+
+
+
+/* === QRA PREMIUM FASE 2 — CALCULADORA RESPONSIVA (VISUAL ONLY) === */
+#sCalc{--pc-bg:#0a0e1a;--pc-card:#111726;--pc-line:#253047;--pc-soft:#8b95a7;--pc-orange:#ff6600;--pc-orange2:#ff812b;}
+#sCalc .qraCalcShell{width:min(100%,580px)!important;margin:0 auto!important;padding:clamp(6px,1.2vh,12px) 0 clamp(96px,12vh,122px)!important;zoom:1!important}
+#sCalc .qraCalcIntro,#sCalc #qraCalcStage1{zoom:1!important}
+.qraPremiumCalcStepper{display:flex;align-items:flex-start;width:100%;padding:clamp(6px,1.2vh,12px) clamp(6px,1.8vw,12px) clamp(16px,2.7vh,24px)!important}
+.qraPremiumCalcStepper>i{height:2px;flex:1;background:#273044;margin:18px 5px 0;position:relative;overflow:hidden;border-radius:3px}
+.qraPremiumCalcStepper>i:after{content:"";display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pc-orange),#ff8e3d);transition:width .22s ease}
+.qraPremiumStep{min-width:58px;text-align:center;color:#657083;transition:.2s ease}
+.qraPremiumStep b{width:38px;height:38px;border-radius:50%;margin:0 auto 6px;display:grid;place-items:center;background:#485164;color:#aeb6c4;font-size:15px;font-weight:800;border:1px solid rgba(255,255,255,.04)}
+.qraPremiumStep span{display:block;font-size:11px;font-weight:700;letter-spacing:.1px}
+.qraPremiumStep1{color:#fff}.qraPremiumStep1 b{background:linear-gradient(145deg,var(--pc-orange),#ff7e25);color:white;box-shadow:0 8px 24px rgba(255,102,0,.24)}
+.qraCalcShell.qraStageTwo .qraPremiumStep1{color:#ff8b45}.qraCalcShell.qraStageTwo .qraPremiumStep1 b{background:#3a261e;color:#ff873d;border-color:#6b3822;box-shadow:none}
+.qraCalcShell.qraStageTwo .qraPremiumStep2{color:#fff}.qraCalcShell.qraStageTwo .qraPremiumStep2 b{background:linear-gradient(145deg,var(--pc-orange),#ff7e25);color:#fff;box-shadow:0 8px 24px rgba(255,102,0,.24)}
+.qraCalcShell.qraStageTwo .qraPremiumCalcStepper>i:first-of-type:after{width:100%}
+#sCalc .qraScreenIntro{padding:0 clamp(7px,2vw,12px) clamp(14px,2vh,20px)!important}
+#sCalc .qraCalcIntro .qraEyebrow{display:none!important}
+#sCalc .qraCalcIntro h2{font-size:clamp(25px,7.2vw,33px)!important;line-height:1.02!important;letter-spacing:-1px!important;margin:0 0 5px!important;color:#f8fafc!important}
+#sCalc .qraCalcIntro #creditosInfo{font-size:clamp(10px,2.8vw,12px)!important;margin:0!important;color:#7f8b9d!important}
+#qraCalcStage1{padding:0 clamp(3px,1.2vw,8px)!important}
+#qraCalcStage1 .qraRouteCard{padding:0!important;margin:0!important;background:transparent!important;border:0!important;box-shadow:none!important;overflow:visible!important}
+#qraCalcStage1 .qraRouteLine{display:grid!important;grid-template-columns:28px minmax(0,1fr)!important;gap:8px!important;align-items:center!important;background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.012)),#101625!important;border:1px solid #273148!important;border-radius:17px!important;padding:clamp(9px,1.8vh,13px) clamp(12px,3vw,16px)!important;min-height:clamp(62px,8.4vh,72px)!important;margin:0 0 11px!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.02)!important}
+#qraCalcStage1 .qraRouteLine.destination{border-top:1px solid #273148!important;padding-top:clamp(9px,1.8vh,13px)!important}
+#qraCalcStage1 .qraRouteStem{display:none!important}
+#qraCalcStage1 .qraRouteDot{width:22px!important;height:22px!important;min-width:22px!important;min-height:22px!important;background:transparent!important;box-shadow:none!important;border:0!important;position:relative!important}
+#qraCalcStage1 .qraRouteDot:before{content:"⌖";display:grid;place-items:center;width:22px;height:22px;color:#929dae;font-size:22px;font-weight:500}
+#qraCalcStage1 .qraRouteField label,#qraCalcStage1 .qraRouteCard #destBox>label{font-size:10px!important;letter-spacing:.65px!important;color:#8d98aa!important;margin:0 0 2px!important;text-transform:none!important;font-weight:600!important}
+#qraCalcStage1 .qraRouteField input,#qraCalcStage1 .qraRouteCard #destBox input{font-size:clamp(16px,4.6vw,19px)!important;font-weight:600!important;min-height:29px!important;padding:2px 0!important;color:#f7f9fb!important}
+#qraCalcStage1 .qraRouteField input::placeholder,#qraCalcStage1 .qraRouteCard #destBox input::placeholder{color:#707b8e!important;font-weight:500!important}
+#qraCalcStage1 .qraOfferCard{padding:0!important;margin:0!important;background:transparent!important;border:0!important;box-shadow:none!important}
+#qraCalcStage1 .qraOfferCard>label{display:none!important}
+#qraCalcStage1 .qraMoneyInput{min-height:clamp(62px,8.4vh,72px)!important;background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.012)),#101625!important;border:1px solid #273148!important;border-radius:17px!important;padding:0 clamp(13px,3.5vw,18px)!important;gap:9px!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.02)!important}
+#qraCalcStage1 .qraMoneyInput>span{font-size:22px!important;color:#9ca7b8!important;font-weight:700!important}
+#qraCalcStage1 .qraMoneyInput input{font-size:clamp(20px,5.7vw,25px)!important;min-height:56px!important;font-weight:700!important;letter-spacing:-.4px!important;color:#fff!important}
+#qraCalcStage1 .qraMoneyInput input::placeholder{color:#707b8e!important}
+#qraCalcStage1 .qraOfferCard small{display:block!important;font-size:10px!important;color:#707d90!important;margin:6px 4px 0!important}
+#qraCalcStage1 .qraVoiceRow{border-top:0!important;margin:11px 0 13px!important;padding:0!important;display:block!important}
+#qraCalcStage1 .qraVoiceBtn{width:100%!important;min-height:clamp(50px,6.8vh,58px)!important;border-radius:18px!important;border:1px solid #5a6679!important;background:rgba(17,23,38,.82)!important;color:#c8d0dc!important;font-size:clamp(13px,3.6vw,15px)!important;font-weight:600!important;box-shadow:none!important}
+#qraCalcStage1 .qraVoiceBtn:active{background:#171f31!important;border-color:#8792a4!important}
+#qraCalcStage1 .qraVoiceRow p{display:none!important}
+
+/* Etapa 2 */
+#qraCalcStage2{padding:0 clamp(3px,1.2vw,8px) 8px!important}
+#qraCalcStage2 .qraStageTop{margin:0 0 12px!important;gap:10px!important;padding:0 1px!important}
+#qraCalcStage2 .qraStageBack{width:42px!important;height:42px!important;flex:0 0 42px!important;border-radius:14px!important;background:#111827!important;border:1px solid #29344a!important;color:#fff!important;box-shadow:none!important}
+#qraCalcStage2 .qraStageTop .qraEyebrow{display:none!important}
+#qraCalcStage2 .qraStageTop h3{font-size:clamp(22px,6vw,28px)!important;line-height:1.04!important;letter-spacing:-.7px!important;color:#f8fafc!important}
+#qraCalcStage2 .qraStageTop p{font-size:clamp(10px,2.8vw,12px)!important;color:#7f8b9d!important;margin-top:4px!important}
+#qraCalcStage2 .qraInlineChoices{padding:0!important;margin:0 0 12px!important;background:transparent!important;border:0!important;box-shadow:none!important}
+#qraCalcStage2 .qraInlineChoices .qraAdvancedBody{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:10px!important;padding:0!important}
+#qraCalcStage2 .qraChoiceField{min-height:clamp(62px,8vh,72px)!important;padding:9px 13px 10px!important;border-radius:17px!important;background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.012)),#101625!important;border:1px solid #273148!important;box-shadow:none!important}
+#qraCalcStage2 .qraChoiceField.qraFull{grid-column:1/-1!important}
+#qraCalcStage2 .qraChoiceField label{font-size:9px!important;letter-spacing:.75px!important;color:#8290a4!important;margin-bottom:4px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+#qraCalcStage2 .qraChoiceField select,#qraCalcStage2 .qraChoiceField input{font-size:clamp(13px,3.8vw,16px)!important;min-height:26px!important;font-weight:650!important;color:#f8fafc!important;padding-right:25px!important}
+#qraCalcStage2 .qraChoiceField.isSelect::after{font-size:17px!important;right:13px!important;color:#cbd4df!important}
+#qraCalcStage2 #eixosHint{grid-column:1/-1!important;margin:0!important}
+#qraCalcStage2 #altoBox{grid-column:1/-1!important;background:#111827!important;border:1px solid #28344a!important;border-radius:16px!important}
+#qraCalcStage2 .qraConfirmCalculate{min-height:clamp(52px,7vh,60px)!important;border-radius:18px!important;background:linear-gradient(135deg,var(--pc-orange),var(--pc-orange2))!important;color:#fff!important;font-size:clamp(14px,4vw,16px)!important;box-shadow:0 14px 30px rgba(255,102,0,.23)!important;padding:0 20px!important;margin:0!important}
+#qraCalcStage2 .qraConfirmCalculate b{font-size:24px!important}
+
+@media(max-width:365px){
+  .qraPremiumStep{min-width:52px}.qraPremiumStep b{width:34px;height:34px}.qraPremiumCalcStepper>i{margin-top:16px}
+  #qraCalcStage2 .qraInlineChoices .qraAdvancedBody{gap:7px!important}
+  #qraCalcStage2 .qraChoiceField{min-height:58px!important;padding:7px 10px 8px!important}
+  #qraCalcStage2 .qraChoiceField select,#qraCalcStage2 .qraChoiceField input{font-size:12.5px!important}
+}
+@media(min-width:430px) and (max-width:699px){
+  #sCalc .qraCalcShell{width:min(100%,560px)!important}
+  #qraCalcStage1 .qraRouteLine,#qraCalcStage1 .qraMoneyInput{min-height:74px!important}
+  #qraCalcStage2 .qraChoiceField{min-height:74px!important}
+}
+
+/* ===== QRA PREMIUM · FASE 4 · HISTÓRICO / VIAGENS ===== */
+.qraHistoryPremium{
+  width:min(100%,620px);
+  margin:0 auto;
+  padding:clamp(4px,1.2vw,8px) 0 calc(92px + env(safe-area-inset-bottom));
+}
+.qraHistoryHeader{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;
+  margin-bottom:12px;
+}
+.qraHistoryHeader .qraScreenIntro{padding:clamp(8px,2vw,12px) 4px 8px!important;min-width:0}
+.qraHistoryHeader .qraScreenIntro h2{
+  font-size:clamp(28px,7vw,36px)!important;
+  letter-spacing:-1px!important;
+  margin:1px 0 5px!important;
+}
+.qraHistoryHeader .qraScreenIntro p{
+  max-width:330px;
+  font-size:clamp(11px,3vw,13px)!important;
+  color:#8190a3!important;
+}
+.qraHistoryClearTop{
+  flex:0 0 auto;
+  margin-top:clamp(12px,3vw,18px);
+  min-height:38px;
+  padding:0 14px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.16);
+  color:#dce4ee;
+  background:rgba(255,255,255,.025);
+  font-weight:750;
+  font-size:12px;
+  letter-spacing:.1px;
+}
+.qraHistoryClearTop:active{transform:scale(.98)}
+.qraHistoryList{display:grid;gap:10px}
+.qraHistoryList .hist{
+  position:relative;
+  margin:0!important;
+  padding:clamp(14px,3.6vw,18px)!important;
+  border-radius:20px!important;
+  border:1px solid rgba(124,148,174,.14)!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.018)),#101725!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.025),0 14px 32px rgba(0,0,0,.15)!important;
+  overflow:hidden;
+}
+.qraHistoryList .hist:before{
+  content:'';
+  position:absolute;
+  left:0;top:0;bottom:0;
+  width:3px;
+  background:linear-gradient(180deg,#ff7a18,#ff5a00);
+  opacity:.95;
+}
+.qraHistoryList .hist>b{
+  display:block;
+  padding-right:4px;
+  font-size:clamp(15px,4vw,18px)!important;
+  line-height:1.22;
+  color:#f7f9fc!important;
+  letter-spacing:-.28px;
+}
+.qraHistoryList .hist>p{
+  margin:5px 0 11px!important;
+  font-size:10.5px!important;
+  color:#7f8da0!important;
+}
+.qraHistoryList .hist .metric{
+  min-height:0!important;
+  padding:6px 0!important;
+  border-bottom:1px solid rgba(255,255,255,.055)!important;
+  font-size:11.5px!important;
+}
+.qraHistoryList .hist .metric:last-child{border-bottom:0!important;padding-bottom:0!important}
+.qraHistoryList .hist .metric span:first-child{
+  color:#8595a8!important;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.65px;
+  font-weight:800;
+}
+.qraHistoryList .hist .metric span:last-child{
+  color:#edf3f8!important;
+  font-size:12px;
+  font-weight:850!important;
+}
+.qraHistoryList .hist .metric:nth-of-type(2){
+  margin-top:1px;
+  padding:8px 0!important;
+}
+.qraHistoryList .hist .metric:nth-of-type(2) span:last-child{
+  color:#fff!important;
+  font-size:clamp(18px,4.8vw,22px)!important;
+  letter-spacing:-.4px;
+}
+.qraHistoryList .hist .metric:nth-of-type(3) span:last-child{color:#ff9a55!important}
+.qraHistoryList .hist .metric:nth-of-type(4) span:last-child{color:#9eddb9!important}
+.qraHistoryList>p.mut{
+  margin:28px 0 0!important;
+  min-height:190px;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  padding:28px;
+  border:1px dashed rgba(255,255,255,.12);
+  border-radius:22px;
+  background:rgba(255,255,255,.018);
+  color:#7f8da0!important;
+  font-size:13px!important;
+}
+@media(max-width:390px){
+  .qraHistoryPremium{padding-left:1px;padding-right:1px}
+  .qraHistoryHeader{gap:8px}
+  .qraHistoryClearTop{padding:0 11px;min-height:36px;font-size:11px}
+  .qraHistoryList .hist{border-radius:18px!important}
+}
+@media(min-width:600px){
+  .qraHistoryPremium{max-width:620px}
+  .qraHistoryList{gap:12px}
+  .qraHistoryList .hist{padding:18px 20px!important}
+}
+
+
+/* === QRA FRETE PREMIUM — ACABAMENTO FINAL DO PRODUTO (VISUAL ONLY) === */
+:root{
+  --qra-final-bg:#080d16;
+  --qra-final-surface:#101725;
+  --qra-final-surface-2:#131c2d;
+  --qra-final-line:rgba(132,154,181,.14);
+  --qra-final-orange:#ff6600;
+  --qra-final-orange-soft:#ff8a3d;
+  --qra-final-text:#f7f9fc;
+  --qra-final-muted:#8795a8;
+}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;background:#050811}
+body{
+  background:radial-gradient(circle at 50% -10%,rgba(255,102,0,.075),transparent 34%),#050811!important;
+  color:var(--qra-final-text)!important;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+.app{
+  background:linear-gradient(180deg,#0b111c 0%,#080d16 58%,#070b12 100%)!important;
+  border-left:1px solid rgba(255,255,255,.025);
+  border-right:1px solid rgba(255,255,255,.025);
+}
+header{
+  padding:calc(10px + env(safe-area-inset-top)) clamp(13px,3.8vw,18px) 10px!important;
+  min-height:68px;
+  background:rgba(8,13,22,.88)!important;
+  border-bottom:1px solid rgba(132,154,181,.09)!important;
+  box-shadow:0 10px 30px rgba(0,0,0,.16)!important;
+}
+header .head{gap:10px!important;min-width:0}
+header .mark{width:42px!important;height:42px!important;min-width:42px;border-radius:13px!important;overflow:hidden;box-shadow:0 8px 22px rgba(255,102,0,.15)!important}
+header .mark img{width:100%;height:100%;object-fit:cover;display:block}
+header .head h1{font-size:17px!important;letter-spacing:-.25px!important;line-height:1!important}
+header .head p{margin-top:4px!important;font-size:10px!important;color:#7d8b9d!important;max-width:min(56vw,300px)!important}
+.logoutBtn{width:auto!important;min-width:62px!important;min-height:38px!important;padding:0 13px!important;border-radius:12px!important;font-size:11px!important;font-weight:800!important;color:#b9c4d1!important;background:rgba(255,255,255,.035)!important;border:1px solid rgba(255,255,255,.08)!important}
+main{padding:clamp(10px,2.8vw,14px) clamp(10px,2.8vw,14px) 8px!important}
+.screen{animation:qraFinalFade .18s ease-out}
+@keyframes qraFinalFade{from{opacity:.45;transform:translateY(3px)}to{opacity:1;transform:none}}
+.card{
+  border-color:var(--qra-final-line)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.025),0 14px 34px rgba(0,0,0,.15)!important;
+}
+input,select,textarea{
+  border-color:rgba(132,154,181,.16)!important;
+  background:#0b111c!important;
+  color:#f7f9fc!important;
+  transition:border-color .16s ease,box-shadow .16s ease,background .16s ease;
+}
+input::placeholder,textarea::placeholder{color:#667487!important}
+input:focus,select:focus,textarea:focus{
+  border-color:rgba(255,102,0,.65)!important;
+  background:#0d1420!important;
+  box-shadow:0 0 0 3px rgba(255,102,0,.10)!important;
+}
+button,.btn,.tab{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+button:focus-visible,.btn:focus-visible,.tab:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:2px solid rgba(255,125,49,.82)!important;
+  outline-offset:2px!important;
+}
+.btn{transition:transform .12s ease,filter .12s ease,box-shadow .12s ease!important}
+.btn:active{transform:translateY(1px) scale(.995)}
+.btn:not(.sec):not(.ghost):not(.bad){
+  background:linear-gradient(135deg,#ff5f00,#ff8128)!important;
+  color:#fff!important;
+  box-shadow:0 12px 30px rgba(255,102,0,.21)!important;
+}
+.btn.sec{background:#121a28!important;border-color:rgba(132,154,181,.16)!important;color:#dce4ee!important}
+
+/* Navegação inferior — discreta, previsível e confortável para uso com uma mão */
+.tabs{
+  grid-template-columns:repeat(3,1fr)!important;
+  min-height:70px!important;
+  padding:7px 10px calc(7px + env(safe-area-inset-bottom))!important;
+  background:rgba(8,13,22,.94)!important;
+  border-top:1px solid rgba(132,154,181,.11)!important;
+  box-shadow:0 -14px 32px rgba(0,0,0,.20)!important;
+}
+.tab{
+  display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
+  gap:2px!important;min-height:52px!important;padding:3px 4px!important;border-radius:14px!important;
+  color:#77869a!important;background:transparent!important;font-size:10px!important;font-weight:750!important;
+}
+.tabIco{
+  width:31px!important;height:31px!important;border-radius:50%!important;display:grid!important;place-items:center!important;
+  font-size:16px!important;line-height:1!important;transition:background .16s ease,color .16s ease,transform .16s ease!important;
+}
+.tab.on{color:#ff8740!important;background:transparent!important}
+.tab.on .tabIco{background:rgba(255,102,0,.14)!important;color:#ff7b2a!important;box-shadow:inset 0 0 0 1px rgba(255,102,0,.08)!important;transform:translateY(-1px)}
+.homeIndicator{display:none!important}
+
+/* Títulos e microtipografia unificados */
+.qraScreenIntro h2,.qraHistoryHeader .qraScreenIntro h2{color:#f8fafc!important;text-wrap:balance}
+.qraScreenIntro p,.qraStageTop p{color:#8290a3!important}
+.qraEyebrow{color:#ff8739!important}
+label{color:#8d9bae!important}
+
+/* Resultado / custo real: mesma linguagem dos cards principais */
+.qraResultPortal{background:radial-gradient(circle at 50% -10%,rgba(255,102,0,.07),transparent 30%),#080d16!important}
+.qraResultPortalTop{background:linear-gradient(180deg,rgba(8,13,22,.98) 72%,rgba(8,13,22,0))!important;padding-top:8px!important}
+.qraResultPortalTitle span{color:#ff8438!important}
+.qraResultPortalTitle b{font-size:19px!important;letter-spacing:-.3px!important}
+.qraResultPrimaryActions{gap:9px!important}
+.qraResultPrimaryActions .btn{min-height:48px!important;border-radius:16px!important}
+#custoBox{border-radius:22px!important;background:#0e1623!important;border:1px solid rgba(132,154,181,.14)!important}
+.qraCostTopbar{background:rgba(8,13,22,.95)!important;border-bottom-color:rgba(132,154,181,.10)!important}
+
+/* Histórico / perfil — pequenos alinhamentos finais */
+.qraHistoryClearTop{transition:background .15s ease,border-color .15s ease,transform .12s ease}
+.qraHistoryClearTop:hover{background:rgba(255,255,255,.045);border-color:rgba(255,255,255,.22)}
+.qraSimpleProfileCard,.qraSimpleProfileInfo{border-radius:21px!important}
+.qraSimpleProfileCard .btn{min-height:48px!important;border-radius:16px!important}
+.qraConsentDetails{overflow:hidden}
+
+/* Respostas touch: mantém conforto sem desperdiçar tela */
+@media (max-width:699px){
+  .app{min-height:100dvh!important}
+  header{position:sticky!important;top:0!important}
+  main{padding-bottom:4px!important}
+  .screen{padding-left:clamp(10px,3vw,16px)!important;padding-right:clamp(10px,3vw,16px)!important}
+  .qraResultPortal{padding-left:clamp(10px,3vw,16px)!important;padding-right:clamp(10px,3vw,16px)!important}
+}
+@media (max-width:374px){
+  header .head p{display:none!important}
+  header{min-height:62px!important}
+  .tabs{min-height:66px!important}
+  .tab{min-height:48px!important}
+}
+@media (min-width:700px){
+  .app{max-width:520px!important}
+  .tabs{width:520px!important}
+  header .head p{max-width:300px!important}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+}
 
 </style>
 </head>
@@ -1124,6 +1497,13 @@ body.qraResultPortalOpen{overflow:hidden!important}
 </section>
 <section id="sCalc" class="screen">
   <div class="qraCalcShell">
+    <div class="qraPremiumCalcStepper" aria-hidden="true">
+      <div class="qraPremiumStep qraPremiumStep1"><b>1</b><span>Rota</span></div>
+      <i></i>
+      <div class="qraPremiumStep qraPremiumStep2"><b>2</b><span>Detalhes</span></div>
+      <i></i>
+      <div class="qraPremiumStep qraPremiumStep3"><b>3</b><span>Resultado</span></div>
+    </div>
     <div class="qraScreenIntro qraCalcIntro">
       <span class="qraEyebrow">QRA FRETE</span>
       <h2>Calcule seu FRETE</h2>
@@ -1195,10 +1575,16 @@ body.qraResultPortalOpen{overflow:hidden!important}
   </div>
 </section>
 <section id="sHist" class="screen">
-  <div class="qraHistoryShell">
-    <div class="qraScreenIntro"><span class="qraEyebrow">SUAS VIAGENS</span><h2>Histórico</h2><p>Seus últimos cálculos ficam guardados aqui.</p></div>
+  <div class="qraHistoryShell qraHistoryPremium">
+    <div class="qraHistoryHeader">
+      <div class="qraScreenIntro">
+        <span class="qraEyebrow">SUAS VIAGENS</span>
+        <h2>Viagens</h2>
+        <p>Seus cálculos recentes, organizados para consulta rápida.</p>
+      </div>
+      <button class="qraHistoryClearTop" onclick="clearHist()" type="button">Limpar</button>
+    </div>
     <div id="histList" class="qraHistoryList"></div>
-    <button class="btn bad qraClearHistory" onclick="clearHist()">Limpar histórico</button>
   </div>
 </section>
 
@@ -1233,7 +1619,7 @@ body.qraResultPortalOpen{overflow:hidden!important}
     <div id="qraResultMount"></div>
   </div>
 </div>
-<nav class="tabs"><button class="tab on" onclick="go('Calc',this)"><span class="tabIco">🧮</span><span>Calcular</span></button><button class="tab" onclick="go('Hist',this)"><span class="tabIco">🕘</span><span>Histórico</span></button><button class="tab" onclick="go('Cad',this)"><span class="tabIco">👤</span><span>Perfil</span></button><div class="homeIndicator"><span></span></div></nav></div>
+<nav class="tabs"><button class="tab on" onclick="go('Calc',this)"><span class="tabIco">🧮</span><span>Calcular</span></button><button class="tab" onclick="go('Hist',this)"><span class="tabIco">🕘</span><span>Viagens</span></button><button class="tab" onclick="go('Cad',this)"><span class="tabIco">👤</span><span>Perfil</span></button><div class="homeIndicator"><span></span></div></nav></div>
 <script src="/vendor/supabase.js"></script>
 <script>
 const SUPABASE_URL='https://eexfcwcxjppbmzigyris.supabase.co';
@@ -2017,7 +2403,7 @@ function calcularCustoReal(){
 }
 function fecharCustoReal(){const b=$('custoBox');if(b){b.classList.add('hide');document.body.classList.remove('qraCostOpen')}}
 function fecharCustoRealENovo(){fecharCustoReal();if(typeof novoCalculo==='function')novoCalculo()}
-function renderHist(){let h=jget(LS.hist,[]);$('histList').innerHTML=h.length?h.map(x=>{const temAntt=x.antt!==null&&x.antt!==undefined;const valeu=temAntt&&Number(x.valor)>=Number(x.antt);const badge=temAntt?`<span class="histBadge ${valeu?'ok':'bad'}">${valeu?'Valeu':'Abaixo'}</span>`:'';return `<div class="hist"><div class="histTop"><b>${esc(x.desc)}</b>${badge}</div><p class="mut">${new Date(x.dt).toLocaleString('pt-BR')}</p><div class="metric"><span>KM</span><span>${km(x.km)}</span></div><div class="metric"><span>Frete</span><span>${money(x.valor)}</span></div><div class="metric"><span>ANTT</span><span>${x.antt?money(x.antt):'não calculada'}</span></div><div class="metric"><span>Cascalho</span><span>${x.cas===null||x.cas===undefined?'não calculado':money(x.cas)}</span></div></div>`}).join(''):'<p class="mut">Nenhuma simulação ainda.</p>'}function clearHist(){if(confirm('Limpar histórico?')){jset(LS.hist,[]);renderHist()}}
+function renderHist(){let h=jget(LS.hist,[]);$('histList').innerHTML=h.length?h.map(x=>`<div class="hist"><b>${esc(x.desc)}</b><p class="mut">${new Date(x.dt).toLocaleString('pt-BR')}</p><div class="metric"><span>KM</span><span>${km(x.km)}</span></div><div class="metric"><span>Frete</span><span>${money(x.valor)}</span></div><div class="metric"><span>ANTT</span><span>${x.antt?money(x.antt):'não calculada'}</span></div><div class="metric"><span>Cascalho</span><span>${x.cas===null||x.cas===undefined?'não calculado':money(x.cas)}</span></div></div>`).join(''):'<p class="mut">Nenhuma simulação ainda.</p>'}function clearHist(){if(confirm('Limpar histórico?')){jset(LS.hist,[]);renderHist()}}
 
 
 
