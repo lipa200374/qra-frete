@@ -446,6 +446,8 @@ header{
   top:0;
   z-index:25;
   backdrop-filter: blur(10px);
+  max-width:480px;
+  margin:0 auto;
 }
 .head{
   gap:12px !important;
@@ -962,6 +964,11 @@ body.qraCostOpen{overflow:hidden!important}
 
 /* HISTÓRICO */
 .qraHistoryShell{max-width:620px;margin:0 auto}.qraHistoryList .hist{border-radius:18px!important;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.012)),#0d141c!important;border:1px solid rgba(255,255,255,.07)!important;padding:14px!important;margin-bottom:9px!important}.qraHistoryList .hist>b{font-size:13px;color:#eef4f8}.qraHistoryList .hist p{font-size:9px!important;margin:4px 0 8px!important}.qraHistoryList .metric{font-size:11px!important}.qraClearHistory{margin-top:12px!important;opacity:.74;min-height:44px!important}
+.histTop{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.histTop>b{flex:1 1 auto;min-width:0;overflow-wrap:anywhere}
+.histBadge{flex:0 0 auto;padding:4px 11px;border-radius:999px;font-size:10.5px;font-weight:800;letter-spacing:.2px;white-space:nowrap}
+.histBadge.ok{background:rgba(48,209,132,.16);color:#8fe8b8;border:1px solid rgba(48,209,132,.4)}
+.histBadge.bad{background:rgba(255,99,99,.16);color:#ffb3b3;border:1px solid rgba(255,99,99,.4)}
 
 /* Remove recuperação incompleta da experiência publicada */
 button[onclick="authTab('reset')"]{display:none!important}
@@ -2010,7 +2017,7 @@ function calcularCustoReal(){
 }
 function fecharCustoReal(){const b=$('custoBox');if(b){b.classList.add('hide');document.body.classList.remove('qraCostOpen')}}
 function fecharCustoRealENovo(){fecharCustoReal();if(typeof novoCalculo==='function')novoCalculo()}
-function renderHist(){let h=jget(LS.hist,[]);$('histList').innerHTML=h.length?h.map(x=>`<div class="hist"><b>${esc(x.desc)}</b><p class="mut">${new Date(x.dt).toLocaleString('pt-BR')}</p><div class="metric"><span>KM</span><span>${km(x.km)}</span></div><div class="metric"><span>Frete</span><span>${money(x.valor)}</span></div><div class="metric"><span>ANTT</span><span>${x.antt?money(x.antt):'não calculada'}</span></div><div class="metric"><span>Cascalho</span><span>${x.cas===null||x.cas===undefined?'não calculado':money(x.cas)}</span></div></div>`).join(''):'<p class="mut">Nenhuma simulação ainda.</p>'}function clearHist(){if(confirm('Limpar histórico?')){jset(LS.hist,[]);renderHist()}}
+function renderHist(){let h=jget(LS.hist,[]);$('histList').innerHTML=h.length?h.map(x=>{const temAntt=x.antt!==null&&x.antt!==undefined;const valeu=temAntt&&Number(x.valor)>=Number(x.antt);const badge=temAntt?`<span class="histBadge ${valeu?'ok':'bad'}">${valeu?'Valeu':'Abaixo'}</span>`:'';return `<div class="hist"><div class="histTop"><b>${esc(x.desc)}</b>${badge}</div><p class="mut">${new Date(x.dt).toLocaleString('pt-BR')}</p><div class="metric"><span>KM</span><span>${km(x.km)}</span></div><div class="metric"><span>Frete</span><span>${money(x.valor)}</span></div><div class="metric"><span>ANTT</span><span>${x.antt?money(x.antt):'não calculada'}</span></div><div class="metric"><span>Cascalho</span><span>${x.cas===null||x.cas===undefined?'não calculado':money(x.cas)}</span></div></div>`}).join(''):'<p class="mut">Nenhuma simulação ainda.</p>'}function clearHist(){if(confirm('Limpar histórico?')){jset(LS.hist,[]);renderHist()}}
 
 
 
