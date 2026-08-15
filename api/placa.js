@@ -1,4 +1,5 @@
 const { exigirUsuarioLogado } = require('./_auth');
+
 module.exports = async function handler(req, res) {
   try {
     await exigirUsuarioLogado(req);

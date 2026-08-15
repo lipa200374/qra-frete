@@ -1,4 +1,5 @@
 const { exigirUsuarioLogado } = require('./_auth');
+
 module.exports = async function handler(req, res) {
   try {
     await exigirUsuarioLogado(req);
@@ -12,6 +13,7 @@ module.exports = async function handler(req, res) {
     res.status(500).json({ error: 'GEOAPIFY_KEY não configurada no servidor.' });
     return;
   }
+
   let url;
   if (cep) {
     // Busca por CEP: manda o CEP como texto livre pra Geoapify, restrito ao Brasil.
@@ -22,6 +24,7 @@ module.exports = async function handler(req, res) {
     res.status(400).json({ error: 'Informe cep, ou nome e uf.' });
     return;
   }
+
   try {
     const r = await fetch(url);
     const d = await r.json();

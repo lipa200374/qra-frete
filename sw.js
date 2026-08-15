@@ -1,4 +1,4 @@
-const CACHE_NAME = 'qra-frete-v4-7';
+const CACHE_NAME = 'qra-frete-v4-8';
 const APP_SHELL = ['/', '/manifest.json'];
 
 self.addEventListener('install', (event) => {

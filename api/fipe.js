@@ -1,7 +1,9 @@
 // Busca o valor de um veículo na tabela FIPE (caminhões), fazendo correspondência
 // aproximada entre o texto de marca/modelo (vindo da consulta de placa) e o
 // catálogo oficial da FIPE, que nem sempre usa a mesma grafia.
+
 const FIPE_BASE = 'https://fipe.parallelum.com.br/api/v2';
+
 function normalizar(s) {
   return String(s || '')
     .normalize('NFD')
@@ -11,6 +13,7 @@ function normalizar(s) {
     .replace(/\s+/g, ' ')
     .trim();
 }
+
 function melhorCorrespondencia(alvo, lista, campoNome) {
   const nAlvo = normalizar(alvo);
   if (!nAlvo) return null;
@@ -27,12 +30,15 @@ function melhorCorrespondencia(alvo, lista, campoNome) {
   achou = lista.find((item) => nAlvo.includes(normalizar(item[campoNome])));
   return achou || null;
 }
+
 async function fipeGet(path) {
   const r = await fetch(`${FIPE_BASE}${path}`);
   if (!r.ok) throw new Error(`FIPE respondeu ${r.status} em ${path}`);
   return r.json();
 }
+
 const { exigirUsuarioLogado } = require('./_auth');
+
 module.exports = async function handler(req, res) {
   try {
     await exigirUsuarioLogado(req);
@@ -45,6 +51,7 @@ module.exports = async function handler(req, res) {
     res.status(400).json({ error: 'Informe marca e modelo.' });
     return;
   }
+
   try {
     const marcas = await fipeGet('/trucks/brands');
     const marcaAchada = melhorCorrespondencia(marca, marcas, 'name');
@@ -52,12 +59,14 @@ module.exports = async function handler(req, res) {
       res.status(404).json({ error: `Marca "${marca}" não encontrada na FIPE.` });
       return;
     }
+
     const modelos = await fipeGet(`/trucks/brands/${marcaAchada.code}/models`);
     const modeloAchado = melhorCorrespondencia(modelo, modelos, 'name');
     if (!modeloAchado) {
       res.status(404).json({ error: `Modelo "${modelo}" não encontrado para a marca ${marcaAchada.name}.` });
       return;
     }
+
     const anos = await fipeGet(`/trucks/brands/${marcaAchada.code}/models/${modeloAchado.code}/years`);
     if (!anos.length) {
       res.status(404).json({ error: 'Nenhum ano disponível para esse modelo na FIPE.' });
@@ -68,9 +77,11 @@ module.exports = async function handler(req, res) {
       anoAchado = anos.find((a) => String(a.name).includes(String(ano))) || null;
     }
     if (!anoAchado) anoAchado = anos[0]; // usa o mais recente disponível como aproximação
+
     const preco = await fipeGet(
       `/trucks/brands/${marcaAchada.code}/models/${modeloAchado.code}/years/${anoAchado.code}`
     );
+
     res.status(200).json({
       valor: preco.price,
       marcaFipe: preco.brand,

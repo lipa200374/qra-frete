@@ -1,19 +1,23 @@
 const { createClient } = require('@supabase/supabase-js');
+
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     res.status(405).json({ error: 'Método não permitido.' });
     return;
   }
+
   const secret = req.headers['x-qra-secret'];
   if (!secret || secret !== process.env.QRA_WEBHOOK_SECRET) {
     res.status(401).json({ error: 'Não autorizado.' });
     return;
   }
+
   const record = req.body && req.body.record;
   if (!record) {
     res.status(400).json({ error: 'Payload sem "record".' });
     return;
   }
+
   try {
     const supabaseAdmin = createClient(
       process.env.SUPABASE_URL,
@@ -24,14 +28,17 @@ module.exports = async function handler(req, res) {
       .select('notify_emails')
       .eq('id', 1)
       .maybeSingle();
+
     const emails = (cfg?.notify_emails || '')
       .split(',')
       .map((e) => e.trim())
       .filter(Boolean);
+
     if (!emails.length) {
       res.status(200).json({ skipped: 'Nenhum e-mail configurado no Admin.' });
       return;
     }
+
     const html = `
       <h2>Novo interesse na oferta do banco parceiro</h2>
       <p><b>Nome:</b> ${record.nome || '-'}</p>
@@ -44,6 +51,7 @@ module.exports = async function handler(req, res) {
       <p><b>Oferta:</b> ${record.banco || '-'} — ${record.tipo_oferta || '-'}</p>
       <p><b>Data:</b> ${record.criado_em || new Date().toISOString()}</p>
     `;
+
     await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
@@ -57,6 +65,7 @@ module.exports = async function handler(req, res) {
         html,
       }),
     });
+
     res.status(200).json({ ok: true });
   } catch (e) {
     console.error(e);
