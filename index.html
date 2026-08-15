@@ -863,28 +863,37 @@ main{padding:12px 12px 6px!important}
 .qraCalculateBtn{min-height:60px!important;border-radius:18px!important;font-size:15px!important;font-weight:950!important;letter-spacing:.3px;display:flex!important;align-items:center;justify-content:space-between!important;padding:0 20px!important;box-shadow:0 14px 30px rgba(255,92,0,.18)!important}
 .qraCalculateBtn b{font-size:24px}
 
-/* RESULTADO: dinheiro primeiro, técnica depois */
-.qraResultCard{margin-top:12px!important;padding:17px!important;scroll-margin-top:85px;background:linear-gradient(180deg,rgba(255,106,0,.055),rgba(255,255,255,.02)),#0d141c!important;text-align:center!important}
-.qraResultCard>h2{font-size:12px!important;text-transform:uppercase;letter-spacing:1.6px;color:#ff8c42!important;margin-bottom:6px!important}
-.qraResultCard>p.mut:first-of-type{font-size:14px!important;color:#dbe3ea!important;font-weight:800!important;margin-bottom:12px!important}
+/* RESULTADO: visual editorial, um cartão só, divisórias finas em vez de caixinhas */
+.qraResultCard{margin-top:12px!important;padding:26px 22px!important;scroll-margin-top:85px;background:#0f141b!important;border:1px solid rgba(255,255,255,.06)!important;border-radius:22px!important;text-align:center!important;position:relative;overflow:hidden}
+.qraResultCard:before{content:'';position:absolute;top:0;left:20%;right:20%;height:2px;background:linear-gradient(90deg,transparent,#ff8a00,transparent)}
+.qraResultCard>h2{font-size:10px!important;text-transform:uppercase;letter-spacing:2.2px;color:#7c8b9a!important;font-weight:800!important;margin:2px 0 8px!important}
+.qraResultCard>p.mut:first-of-type{font-size:15px!important;color:#e7ecf1!important;font-weight:650!important;letter-spacing:-.1px;margin-bottom:22px!important}
 .qraResultCard>h3{display:none!important}
-.qraResultCard>.big.qraKmSecondary{display:inline-flex!important;font-size:12px!important;line-height:1!important;margin:3px 5px 10px!important;padding:7px 10px!important;border-radius:999px;background:rgba(255,255,255,.055);color:#c0ccd6!important;font-weight:800!important;letter-spacing:0!important}
-.qraResultCard>.big.qraKmSecondary:before{content:'Distância · ';color:#718291;font-weight:650}
-.qraAnttHero{display:block!important;text-align:center!important;background:linear-gradient(135deg,#17110d,#10161d)!important;border:1px solid rgba(255,123,24,.34)!important;border-radius:20px!important;padding:16px!important;margin:6px 0 11px!important}
-.qraAnttHero span:first-child{display:block!important;text-align:center!important;color:#ff9b58!important;font-size:10px!important;font-weight:900!important;letter-spacing:1.25px!important;text-transform:uppercase;margin-bottom:4px}
-.qraAnttHero span:last-child{display:block!important;text-align:center!important;color:#fff!important;font-size:35px!important;line-height:1.05!important;font-weight:950!important;letter-spacing:-1.2px!important}
-.qraResultCard>.metric:not(.qraAnttHero),.qraTechBody .metric{display:flex!important;justify-content:center!important;align-items:baseline!important;gap:8px!important;text-align:center!important}
-.qraResultCard>.metric:not(.qraAnttHero) span:first-child::after,.qraTechBody .metric span:first-child::after{content:'→';margin-left:8px;color:#718291;font-weight:700}
-.qraOfferMetric,.qraDiffMetric{border-radius:14px!important;padding:11px 12px!important;background:rgba(255,255,255,.028)!important;border-bottom:0!important;margin-bottom:6px!important}
-.qraDiffMetric span:last-child{font-size:18px!important;font-weight:950!important}
-.qraResultCard>.status{border-radius:16px!important;padding:13px 14px!important;font-size:13px!important;font-weight:850!important;margin:9px 0 12px!important}
-.qraResultPrimaryActions{display:grid;gap:8px;margin:12px 0}
-.qraResultPrimaryActions .btn{margin:0!important;min-height:50px!important;border-radius:15px!important}
-.qraTechDetails{margin:10px 0 12px;border:1px solid rgba(255,255,255,.07);border-radius:15px;background:rgba(255,255,255,.018);text-align:center!important}
-.qraTechDetails>summary{padding:11px 13px;cursor:pointer;color:#899bab;font-size:11px;font-weight:800;list-style:none}
+.qraResultCard>.big.qraKmSecondary{display:block!important;font-size:11px!important;line-height:1!important;margin:14px 0 0!important;padding:0!important;background:none!important;color:#7c8b9a!important;font-weight:650!important;letter-spacing:.3px!important}
+.qraResultCard>.big.qraKmSecondary:before{content:'Distância · ';color:#5b6b7a;font-weight:500}
+.qraResultCard>.pill{display:inline!important;margin:14px 2px 0!important;border:0!important;background:none!important;padding:0!important;font-size:11px!important;color:#7c8b9a!important;font-weight:650!important;letter-spacing:.3px!important}
+.qraResultCard>.pill:before{content:'· '}
+.qraResultCard>.pill:first-of-type:before{content:''}
+.qraAnttHero{display:block!important;text-align:center!important;background:none!important;border:0!important;border-radius:0!important;padding:14px 0 0!important;margin:0!important}
+.qraAnttHero span:first-child{display:block!important;text-align:center!important;color:#ff9b58!important;font-size:9.5px!important;font-weight:800!important;letter-spacing:1.6px!important;text-transform:uppercase;margin-bottom:8px}
+.qraAnttHero span:last-child{display:block!important;text-align:center!important;color:#fff!important;font-size:42px!important;line-height:1!important;font-weight:800!important;letter-spacing:-1.6px!important;font-variant-numeric:tabular-nums}
+.qraResultCard>.metric:not(.qraAnttHero),.qraTechBody .metric{display:flex!important;justify-content:space-between!important;align-items:baseline!important;text-align:left!important;padding:13px 0!important;border-bottom:1px solid rgba(255,255,255,.055)!important;font-size:13.5px!important}
+.qraResultCard>.metric:not(.qraAnttHero) span:first-child,.qraTechBody .metric span:first-child{color:#8695a4!important;font-weight:500!important}
+.qraResultCard>.metric:not(.qraAnttHero) span:last-child{font-weight:700!important;font-variant-numeric:tabular-nums}
+.qraOfferMetric,.qraDiffMetric{border-radius:0!important;padding:13px 0!important;background:none!important;margin:0!important}
+.qraOfferMetric{margin-top:20px!important}
+.qraDiffMetric span:last-child{font-size:16px!important;font-weight:800!important}
+.qraResultCard>.status{border-radius:12px!important;padding:12px 14px!important;font-size:12.5px!important;font-weight:650!important;margin:16px 0 4px!important;background:none!important}
+.qraResultCard>.status.ok{border:1px solid rgba(48,209,132,.28)!important;color:#8fe8b8!important}
+.qraResultCard>.status.bad{border:1px solid rgba(255,99,99,.28)!important;color:#ffb3b3!important}
+.qraResultPrimaryActions{display:grid;gap:8px;margin:18px 0 0}
+.qraResultPrimaryActions .btn{margin:0!important;min-height:52px!important;border-radius:14px!important;letter-spacing:.2px}
+.qraResultPrimaryActions .btn.sec{background:rgba(255,255,255,.04)!important}
+.qraTechDetails{margin:14px 0 0;border:0;border-radius:0;background:none;text-align:center!important}
+.qraTechDetails>summary{padding:0;cursor:pointer;color:#6c7c8c;font-size:11px;font-weight:650;list-style:none;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(255,255,255,.2)}
 .qraTechDetails>summary::-webkit-details-marker{display:none}
-.qraTechBody{padding:0 12px 8px}
-.qraTechBody .metric{font-size:11px!important}
+.qraTechBody{padding:14px 0 0;text-align:left}
+.qraTechBody .metric{font-size:12px!important}
 .qraOpportunityTitle{margin:18px 2px 8px;color:#8496a6;font-size:10px;font-weight:900;letter-spacing:1.4px;text-transform:uppercase}
 .creditBanner,.ofertaBanner{border-radius:18px!important;margin-top:9px!important}
 
