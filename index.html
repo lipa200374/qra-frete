@@ -1819,7 +1819,7 @@ function novoCalculo(){
   $('origIn').value='';
   renderDest();
   $('valor').value='';
-  $('retorno').value='sim';
+  $('retorno').value='nao';
   $('res').classList.add('hide');
   $('res').innerHTML='';
   window.qraLast=null;
@@ -2391,7 +2391,7 @@ if('serviceWorker' in navigator){
     const eixos=document.getElementById('eixosCalc');
     if(eixos)eixos.value=(Number.isInteger(eixosPadrao)&&eixosPadrao>=2&&eixosPadrao<=9)?String(eixosPadrao):'6';
     const contr=document.getElementById('contrCalc');if(contr)contr.value='conjunto';
-    const retorno=document.getElementById('retorno');if(retorno)retorno.value='sim';
+    const retorno=document.getElementById('retorno');if(retorno)retorno.value='nao';
     const alto=document.getElementById('alto');if(alto)alto.value='nao';
     document.querySelectorAll('#altoBox .req').forEach(x=>x.checked=false);
     try{if(typeof toggleAlto==='function')toggleAlto();else if(typeof updateEixosHint==='function')updateEixosHint()}catch(e){}
