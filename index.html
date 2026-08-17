@@ -1420,6 +1420,11 @@ label{color:#8d9bae!important}
 
 .qraAccessCard{border:1px solid rgba(255,106,0,.22)!important;background:linear-gradient(180deg,rgba(255,106,0,.055),rgba(255,255,255,.018))!important}.qraAccessCard .btn{margin-top:10px}.qraDangerZone{margin-top:12px!important;border:1px solid rgba(255,99,99,.18)!important}.qraDangerZone h3{color:#ffc2c2!important}.qraDangerZone .btn.bad{margin-top:8px}.qraPlanPrice{font-weight:900;color:#fff}
 .qraLegalLinks{display:flex;align-items:center;justify-content:center;gap:9px;flex-wrap:wrap;margin:14px 0 2px;font-size:11px;color:#718096}.qraLegalLinks a{color:#98a8b9;text-decoration:none}.qraLegalLinks a:hover{text-decoration:underline;color:#ff8a3d}
+
+/* Etapa 2: remove somente o logo do cabeçalho para ganhar respiro vertical/visual.
+   Título QRA FRETE e botão Sair permanecem. Login e demais telas não são afetados. */
+body:has(#qraCalcStage2.on) header .logoMark{display:none!important}
+body:has(#qraCalcStage2.on) header .head{gap:0!important}
 </style>
 
 <style id="qra-stage2-final-fit-safe">
