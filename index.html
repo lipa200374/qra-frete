@@ -1113,6 +1113,7 @@ body{min-width:0!important}
 #qraCalcStage1 .qraVoiceBtn{width:100%!important;min-height:clamp(50px,6.8vh,58px)!important;border-radius:18px!important;border:1px solid #5a6679!important;background:rgba(17,23,38,.82)!important;color:#c8d0dc!important;font-size:clamp(13px,3.6vw,15px)!important;font-weight:600!important;box-shadow:none!important}
 #qraCalcStage1 .qraVoiceBtn:active{background:#171f31!important;border-color:#8792a4!important}
 #qraCalcStage1 .qraVoiceRow p{display:none!important}
+#qraCalcStage1 .qraRouteOnlyHint{margin:6px 4px 0!important;text-align:center!important;font-size:10px!important;color:#6f7e90!important;line-height:1.35!important}
 
 /* Etapa 2 */
 #qraCalcStage2{padding:0 clamp(3px,1.2vw,8px) 8px!important}
@@ -1544,11 +1545,8 @@ label{color:#8d9bae!important}
         </div>
       </div>
 
-      <div class="card qraOfferCard">
-        <label>QUANTO ESTÃO OFERECENDO?</label>
-        <div class="qraMoneyInput"><span>R$</span><input id="valor" inputmode="decimal" placeholder="0,00"></div>
-        <small>Ao informar o valor, seguimos para os dados da viagem.</small>
-      </div>
+      <input id="valor" type="hidden" value="">
+      <p class="mut qraRouteOnlyHint">Informe somente origem e destino. O QRA calcula o frete mínimo ANTT.</p>
     </div>
 
     <div id="qraCalcStage2" class="qraCalcStage">
@@ -1883,7 +1881,9 @@ function interpretarComandoVoz(texto){
   }
 
   let st=$('vozStatus');
-  if(st)st.textContent=resumo.length?('Entendi: '+resumo.join(', ')+'. Confira os campos e toque em "Ver frete mínimo ANTT".'):'Não consegui identificar os dados. Tente falar assim: "origem Mogi das Cruzes, destino Rio de Janeiro".';
+  const rotaCompleta=!!(sel.orig&&sel.dests&&sel.dests[0]);
+  if(st)st.textContent=resumo.length?(rotaCompleta?'Entendi: '+resumo.join(', ')+'. Avançando...':'Entendi: '+resumo.join(', ')+'. Falta completar a rota.'):'Não consegui identificar os dados. Tente falar assim: "origem Mogi das Cruzes, destino Rio de Janeiro".';
+  if(rotaCompleta&&typeof window.qraCalcGoStage==='function')setTimeout(()=>window.qraCalcGoStage(2),350);
 }
 function vehicleUI(){let v=VEIC.find(x=>x[0]===$('veic').value)||VEIC[0];$('impBox').classList.toggle('hide',!v[3]);let imp=IMP.find(x=>x[0]===$('imp').value)||IMP[2];$('impManual').classList.toggle('hide',imp[0]!=='manual');let t=totalEixos();$('eixosPrev').textContent=t?`${t} eixos`:'—';$('eixosCalc').value=t||'';updateEixosHint()}
 function totalEixos(){let v=VEIC.find(x=>x[0]===$('veic').value);if(!v)return null;if(!v[3])return v[2];let imp=IMP.find(x=>x[0]===$('imp').value)||IMP[2];let ie=imp[0]==='manual'?Number($('impEixos').value||0):Number(imp[2]||0);return v[2]+ie}
@@ -2396,16 +2396,16 @@ async function buscarFipe(){
 function calcularCustoReal(){
   let l=window.qraLast;if(!l)return alert('Calcule o frete mínimo primeiro.');
   salvarPreferenciasCustoReal();
-  let valor=Number(l.valor||0),diesel=br($('diesel').value),cons=br($('consumo').value),valorVeic=br($('valorVeiculo').value),qtdPneus=br($('qtdPneus').value),valorPneu=br($('valorPneu').value);
+  let valor=Number(l.valor||l.antt?.total||0),diesel=br($('diesel').value),cons=br($('consumo').value),valorVeic=br($('valorVeiculo').value),qtdPneus=br($('qtdPneus').value),valorPneu=br($('valorPneu').value);
   let cDiesel=cons>0?(l.km/cons)*diesel:0,dias=Math.max(1,Math.ceil(l.km/500)),capitalMensal=valorVeic*0.012,capitalViagem=(capitalMensal/30)*dias,salarioMensal=3200*2,salarioViagem=(salarioMensal/30)*dias,custoPneu=qtdPneus>0?(valorPneu*qtdPneus/100000)*l.km:0,custo=cDiesel+capitalViagem+salarioViagem+custoPneu,cas=valor-custo;
-  let cls=cas>0?'oktxt':'badtxt',st=cas>0?'<div class="status ok">Frete deixa cascalho no bolso.</div>':'<div class="status bad">Prejuízo estimado: não sobra cascalho.</div>';
-  $('custoResultado').innerHTML=`<h3>Resultado financeiro</h3><div class="metric"><span>Frete oferecido</span><span>${money(valor)}</span></div><div class="metric"><span>Dias estimados de viagem</span><span>${dias}</span></div><div class="metric"><span>Custo diesel</span><span>${money(cDiesel)}</span></div><div class="metric"><span>Custo de capital (veículo)</span><span>${money(capitalViagem)}</span></div><div class="metric"><span>Salário + encargos</span><span>${money(salarioViagem)}</span></div><div class="metric"><span>Desgaste de pneu</span><span>${money(custoPneu)}</span></div><div class="metric"><span>Custo total estimado</span><span>${money(custo)}</span></div><div class="metric"><span>Cascalho no bolso</span><span class="${cls}">${money(cas)}</span></div>${st}<div class="qraResultPrimaryActions" style="margin-top:16px"><button type="button" class="btn sec" onclick="fecharCustoReal()">← Voltar pro resultado</button><button type="button" class="btn sec" onclick="fecharCustoRealENovo()">↻ NOVO FRETE</button></div>`;
+  let cls=cas>0?'oktxt':'badtxt',st=cas>0?'<div class="status ok">No frete mínimo ANTT, sobra cascalho no bolso.</div>':'<div class="status bad">No frete mínimo ANTT, o custo estimado supera o frete.</div>';
+  $('custoResultado').innerHTML=`<h3>Resultado financeiro</h3><div class="metric"><span>Frete mínimo ANTT considerado</span><span>${money(valor)}</span></div><div class="metric"><span>Dias estimados de viagem</span><span>${dias}</span></div><div class="metric"><span>Custo diesel</span><span>${money(cDiesel)}</span></div><div class="metric"><span>Custo de capital (veículo)</span><span>${money(capitalViagem)}</span></div><div class="metric"><span>Salário + encargos</span><span>${money(salarioViagem)}</span></div><div class="metric"><span>Desgaste de pneu</span><span>${money(custoPneu)}</span></div><div class="metric"><span>Custo total estimado</span><span>${money(custo)}</span></div><div class="metric"><span>Cascalho no bolso</span><span class="${cls}">${money(cas)}</span></div>${st}<div class="qraResultPrimaryActions" style="margin-top:16px"><button type="button" class="btn sec" onclick="fecharCustoReal()">← Voltar pro resultado</button><button type="button" class="btn sec" onclick="fecharCustoRealENovo()">↻ NOVO FRETE</button></div>`;
   let h=jget(LS.hist,[]);if(h.length&&h[0].desc===l.desc&&Math.abs(h[0].km-l.km)<.1){h[0].custo=custo;h[0].cas=cas;jset(LS.hist,h)}
   setTimeout(()=>$('custoResultado').scrollIntoView({behavior:'smooth',block:'start'}),40);
 }
 function fecharCustoReal(){const b=$('custoBox');if(b){b.classList.add('hide');document.body.classList.remove('qraCostOpen')}}
 function fecharCustoRealENovo(){fecharCustoReal();if(typeof novoCalculo==='function')novoCalculo()}
-function renderHist(){let h=jget(LS.hist,[]);$('histList').innerHTML=h.length?h.map(x=>`<div class="hist"><b>${esc(x.desc)}</b><p class="mut">${new Date(x.dt).toLocaleString('pt-BR')}</p><div class="metric"><span>KM</span><span>${km(x.km)}</span></div><div class="metric"><span>Frete</span><span>${money(x.valor)}</span></div><div class="metric"><span>ANTT</span><span>${x.antt?money(x.antt):'não calculada'}</span></div><div class="metric"><span>Cascalho</span><span>${x.cas===null||x.cas===undefined?'não calculado':money(x.cas)}</span></div></div>`).join(''):'<p class="mut">Nenhuma simulação ainda.</p>'}function clearHist(){if(confirm('Limpar histórico?')){jset(LS.hist,[]);renderHist()}}
+function renderHist(){let h=jget(LS.hist,[]);$('histList').innerHTML=h.length?h.map(x=>`<div class="hist"><b>${esc(x.desc)}</b><p class="mut">${new Date(x.dt).toLocaleString('pt-BR')}</p><div class="metric"><span>KM</span><span>${km(x.km)}</span></div>${Number(x.valor||0)>0?`<div class="metric"><span>Frete informado</span><span>${money(x.valor)}</span></div>`:''}<div class="metric"><span>Frete mínimo ANTT</span><span>${x.antt?money(x.antt):'não calculada'}</span></div><div class="metric"><span>Cascalho</span><span>${x.cas===null||x.cas===undefined?'não calculado':money(x.cas)}</span></div></div>`).join(''):'<p class="mut">Nenhuma simulação ainda.</p>'}function clearHist(){if(confirm('Limpar histórico?')){jset(LS.hist,[]);renderHist()}}
 
 
 
@@ -2898,27 +2898,16 @@ if('serviceWorker' in navigator){
       setTimeout(()=>c?.scrollIntoView({behavior:'auto',block:'start'}),10);
     }
   };
-  function qraOfferReady(){
-    const v=document.getElementById('valor');
-    let amount=0;
-    try{amount=typeof br==='function'?br(v?.value):Number(String(v?.value||'').replace(/\./g,'').replace(',','.'))||0}catch(e){}
-    return !!(typeof sel!=='undefined'&&sel.orig&&sel.dests&&sel.dests[0]&&amount>0);
+  function qraRouteReady(){
+    return !!(typeof sel!=='undefined'&&sel.orig&&sel.dests&&sel.dests[0]);
   }
   function qraTryAdvance(delay){
     clearTimeout(qraStageTimer);
-    qraStageTimer=setTimeout(()=>{if(qraCalcStage===1&&qraOfferReady())qraCalcGoStage(2)},Number(delay)||120);
+    qraStageTimer=setTimeout(()=>{if(qraCalcStage===1&&qraRouteReady())qraCalcGoStage(2)},Number(delay)||120);
   }
   function qraBindCalcWizard(){
-    const valor=document.getElementById('valor');
-    if(valor){
-      valor.addEventListener('input',()=>qraTryAdvance(700));
-      valor.addEventListener('blur',()=>qraTryAdvance(60));
-      valor.addEventListener('change',()=>qraTryAdvance(60));
-      valor.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();valor.blur();qraTryAdvance(40)}});
-    }
     document.getElementById('origSug')?.addEventListener('click',()=>setTimeout(qraTryAdvance,80));
     document.getElementById('destBox')?.addEventListener('click',e=>{if(e.target.closest('.sugs'))setTimeout(qraTryAdvance,80)});
-    document.getElementById('btnVoz')?.addEventListener('click',()=>setTimeout(qraTryAdvance,1200));
   }
 
   function qraInitUx(){
