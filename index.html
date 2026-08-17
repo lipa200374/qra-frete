@@ -886,6 +886,14 @@ main{padding:12px 12px 6px!important}
 .qraResultCard>.status{border-radius:12px!important;padding:12px 14px!important;font-size:12.5px!important;font-weight:650!important;margin:12px 0 4px!important;background:none!important}
 .qraResultCard>.status.ok{border:1px solid rgba(48,209,132,.28)!important;color:#8fe8b8!important}
 .qraResultCard>.status.bad{border:1px solid rgba(255,99,99,.28)!important;color:#ffb3b3!important}
+.qraOfferAfterAntt{margin:16px 0 2px!important;padding:14px 14px 12px!important;border:1px solid rgba(255,132,56,.22)!important;border-radius:16px!important;background:linear-gradient(180deg,rgba(255,132,56,.06),rgba(255,255,255,.018))!important;text-align:left!important}
+.qraOfferAfterAntt label{display:block!important;margin:0 0 7px!important;color:#ff9a5a!important;font-size:9.5px!important;letter-spacing:1.25px!important;font-weight:900!important}
+.qraOfferAfterAnttInput{display:flex!important;align-items:center!important;gap:7px!important;min-height:52px!important;border:1px solid rgba(255,255,255,.09)!important;border-radius:13px!important;background:#090f17!important;padding:0 12px!important}
+.qraOfferAfterAnttInput>span{color:#ff8b42!important;font-weight:900!important;font-size:16px!important}
+.qraOfferAfterAnttInput input{margin:0!important;padding:10px 0!important;border:0!important;background:transparent!important;box-shadow:none!important;color:#fff!important;font-size:22px!important;font-weight:900!important;min-height:48px!important}
+.qraOfferAfterAnttInput input:focus{outline:none!important;box-shadow:none!important}
+.qraOfferAfterAnttStatus{margin:7px 2px 0!important;font-size:10.5px!important;line-height:1.35!important;color:#8090a0!important}
+.qraOfferAfterAnttStatus.ok{color:#8fe8b8!important}.qraOfferAfterAnttStatus.bad{color:#ffb3b3!important}
 .qraResultPrimaryActions{display:grid;gap:8px;margin:14px 0 0}
 .qraResultPrimaryActions .btn{margin:0!important;min-height:52px!important;border-radius:14px!important;letter-spacing:.2px}
 .qraResultPrimaryActions .btn.sec{background:rgba(255,255,255,.04)!important}
@@ -2302,7 +2310,7 @@ async function calcular(){
 
     // Renderiza o resultado principal IMEDIATAMENTE após rota + ANTT.
     // Banco/ofertas são acessórios e carregam depois, sem segurar a tela.
-    res.innerHTML=`<h2>Frete mínimo</h2><p class="mut">${esc(desc)}</p><div class="big">${km(kmR)}</div><span class="pill"><b>Eixos:</b>&nbsp;${e}</span><span class="pill"><b>Carga:</b>&nbsp;${esc(carga)}</span><h3>ANTT</h3>${anttHTML}${status}<div class="qraResultPrimaryActions"><button type="button" class="btn sec" onclick="abrirCustoReal()">💰 VER MEU CUSTO REAL</button><button type="button" class="btn sec" onclick="novoCalculo()">↻ NOVO FRETE</button></div><div id="custoBox" class="card flat hide" style="margin-top:12px"><h3>Meu custo real</h3><label>Valor aproximado atual do seu caminhão (R$)</label><input id="valorVeiculo" inputmode="decimal" placeholder="Ex.: 450000,00" onchange="salvarPreferenciasCustoReal()"><p class="mut" id="fipeStatus" style="font-size:11px;margin-top:5px">Informe uma vez. O QRA salva esse valor para os próximos cálculos.</p><div class="row"><div><label>Quantidade de pneus</label><input id="qtdPneus" inputmode="numeric" placeholder="Automático pelos eixos"><p class="mut" id="pneusStatus" style="font-size:10px;margin-top:4px"></p></div><div><label>Valor médio do pneu (R$)</label><input id="valorPneu" inputmode="decimal" placeholder="Ex.: 2200,00" onchange="salvarPreferenciasCustoReal()"></div></div><div class="row"><div><label>Diesel R$/L</label><input id="diesel" inputmode="decimal" placeholder="Ex.: 6,10" onchange="salvarPreferenciasCustoReal()"></div><div><label>Consumo médio km/L</label><input id="consumo" inputmode="decimal" placeholder="Ex.: 2,30" onchange="salvarPreferenciasCustoReal()"></div></div><button type="button" class="btn" style="margin-top:12px" onclick="calcularCustoReal()">CALCULAR MEU CUSTO →</button><div id="custoResultado"></div></div><div id="qraOptionalResultContent"></div>`;
+    res.innerHTML=`<h2>Frete mínimo</h2><p class="mut">${esc(desc)}</p><div class="big">${km(kmR)}</div><span class="pill"><b>Eixos:</b>&nbsp;${e}</span><span class="pill"><b>Carga:</b>&nbsp;${esc(carga)}</span><h3>ANTT</h3>${anttHTML}${status}<div class="qraOfferAfterAntt"><label for="valorResultado">VALOR OFERTADO / NEGOCIADO</label><div class="qraOfferAfterAnttInput"><span>R$</span><input id="valorResultado" inputmode="decimal" placeholder="Ex.: 750,00" oninput="atualizarOfertaResultado(false)" onchange="atualizarOfertaResultado(true)"></div><p id="ofertaResultadoStatus" class="qraOfferAfterAnttStatus">Informe o valor que você negociou para calcular o Cascalho no Bolso.</p></div><div class="qraResultPrimaryActions"><button type="button" class="btn sec" onclick="abrirCustoRealComOferta()">💰 VER MEU CUSTO REAL</button><button type="button" class="btn sec" onclick="novoCalculo()">↻ NOVO FRETE</button></div><div id="custoBox" class="card flat hide" style="margin-top:12px"><h3>Meu custo real</h3><label>Valor aproximado atual do seu caminhão (R$)</label><input id="valorVeiculo" inputmode="decimal" placeholder="Ex.: 450000,00" onchange="salvarPreferenciasCustoReal()"><p class="mut" id="fipeStatus" style="font-size:11px;margin-top:5px">Informe uma vez. O QRA salva esse valor para os próximos cálculos.</p><div class="row"><div><label>Quantidade de pneus</label><input id="qtdPneus" inputmode="numeric" placeholder="Automático pelos eixos"><p class="mut" id="pneusStatus" style="font-size:10px;margin-top:4px"></p></div><div><label>Valor médio do pneu (R$)</label><input id="valorPneu" inputmode="decimal" placeholder="Ex.: 2200,00" onchange="salvarPreferenciasCustoReal()"></div></div><div class="row"><div><label>Diesel R$/L</label><input id="diesel" inputmode="decimal" placeholder="Ex.: 6,10" onchange="salvarPreferenciasCustoReal()"></div><div><label>Consumo médio km/L</label><input id="consumo" inputmode="decimal" placeholder="Ex.: 2,30" onchange="salvarPreferenciasCustoReal()"></div></div><button type="button" class="btn" style="margin-top:12px" onclick="calcularCustoReal()">CALCULAR MEU CUSTO →</button><div id="custoResultado"></div></div><div id="qraOptionalResultContent"></div>`;
     res.classList.remove('hide');
     res.style.display='block';res.style.visibility='visible';res.style.opacity='1';
 
@@ -2337,7 +2345,7 @@ async function sincronizarCalculoNoSupabase({desc,origem,destino,km,carga,eixos,
   const uid=sessionData?.session?.user?.id;
   if(!uid)return;
   const diferenca=(antt.ok&&valor>0)?(valor-antt.total):null;
-  const {error}=await sb.from('historico').insert({
+  const {data,error}=await sb.from('historico').insert({
     user_id:uid,
     descricao:desc,
     origem:origem||null,
@@ -2349,8 +2357,54 @@ async function sincronizarCalculoNoSupabase({desc,origem,destino,km,carga,eixos,
     antt_total:antt.ok?antt.total:null,
     diferenca_vs_antt:diferenca,
     tabela:antt.tab||null
-  });
+  }).select('id').single();
   if(error)throw error;
+  if(data?.id&&window.qraLast&&window.qraLast.desc===desc){
+    window.qraLast.historicoId=data.id;
+    const valorAtual=Number(window.qraLast.valor||0);
+    if(valorAtual>0&&valorAtual!==Number(valor||0)){
+      const difAtual=antt.ok?valorAtual-antt.total:null;
+      const {error:upErr}=await sb.from('historico').update({valor_oferecido:valorAtual,diferenca_vs_antt:difAtual}).eq('id',data.id);
+      if(upErr)console.warn('Não foi possível atualizar valor ofertado no histórico:',upErr);
+    }
+  }
+}
+async function persistirOfertaResultadoNoSupabase(valor){
+  const l=window.qraLast;
+  if(!l||!valor)return;
+  try{
+    if(!l.historicoId){l.ofertaPendente=valor;return}
+    const diferenca=l.antt?.ok?valor-Number(l.antt.total||0):null;
+    const {error}=await sb.from('historico').update({valor_oferecido:valor,diferenca_vs_antt:diferenca}).eq('id',l.historicoId);
+    if(error)throw error;
+  }catch(e){console.warn('Não foi possível salvar o valor ofertado no histórico:',e)}
+}
+function atualizarOfertaResultado(persistir=false){
+  const input=$('valorResultado'),l=window.qraLast;
+  if(!input||!l)return 0;
+  const valor=br(input.value);
+  l.valor=valor>0?valor:0;
+  if($('valor'))$('valor').value=valor>0?String(valor):'';
+  const st=$('ofertaResultadoStatus');
+  if(st){
+    st.className='qraOfferAfterAnttStatus';
+    if(valor>0&&l.antt?.ok){
+      const diff=valor-Number(l.antt.total||0);
+      if(diff>=0){st.classList.add('ok');st.textContent=`Oferta ${money(diff)} acima do frete mínimo ANTT.`}
+      else{st.classList.add('bad');st.textContent=`Oferta ${money(Math.abs(diff))} abaixo do frete mínimo ANTT.`}
+    }else st.textContent='Informe o valor que você negociou para calcular o Cascalho no Bolso.';
+  }
+  const h=jget(LS.hist,[]);
+  if(h.length&&h[0].desc===l.desc&&Math.abs(Number(h[0].km||0)-Number(l.km||0))<.1){
+    h[0].valor=valor>0?valor:0;jset(LS.hist,h);
+  }
+  if(persistir&&valor>0)persistirOfertaResultadoNoSupabase(valor);
+  return valor;
+}
+function abrirCustoRealComOferta(){
+  const valor=atualizarOfertaResultado(true);
+  if(!(valor>0)){alert('Informe primeiro o valor ofertado ou negociado para calcular o Cascalho no Bolso.');$('valorResultado')?.focus();return}
+  abrirCustoReal();
 }
 const PNEUS_POR_EIXOS={2:6,3:10,4:12,5:18,6:22,7:26,9:34};
 function valorInputBR(v,dec=2){let n=Number(v||0);return n?n.toLocaleString('pt-BR',{minimumFractionDigits:dec,maximumFractionDigits:dec}):''}
@@ -2396,10 +2450,11 @@ async function buscarFipe(){
 function calcularCustoReal(){
   let l=window.qraLast;if(!l)return alert('Calcule o frete mínimo primeiro.');
   salvarPreferenciasCustoReal();
-  let valor=Number(l.valor||l.antt?.total||0),diesel=br($('diesel').value),cons=br($('consumo').value),valorVeic=br($('valorVeiculo').value),qtdPneus=br($('qtdPneus').value),valorPneu=br($('valorPneu').value);
+  let valor=Number(l.valor||0);if(!(valor>0))return alert('Informe o valor ofertado ou negociado antes de calcular o Cascalho no Bolso.');
+  let diesel=br($('diesel').value),cons=br($('consumo').value),valorVeic=br($('valorVeiculo').value),qtdPneus=br($('qtdPneus').value),valorPneu=br($('valorPneu').value);
   let cDiesel=cons>0?(l.km/cons)*diesel:0,dias=Math.max(1,Math.ceil(l.km/500)),capitalMensal=valorVeic*0.012,capitalViagem=(capitalMensal/30)*dias,salarioMensal=3200*2,salarioViagem=(salarioMensal/30)*dias,custoPneu=qtdPneus>0?(valorPneu*qtdPneus/100000)*l.km:0,custo=cDiesel+capitalViagem+salarioViagem+custoPneu,cas=valor-custo;
-  let cls=cas>0?'oktxt':'badtxt',st=cas>0?'<div class="status ok">No frete mínimo ANTT, sobra cascalho no bolso.</div>':'<div class="status bad">No frete mínimo ANTT, o custo estimado supera o frete.</div>';
-  $('custoResultado').innerHTML=`<h3>Resultado financeiro</h3><div class="metric"><span>Frete mínimo ANTT considerado</span><span>${money(valor)}</span></div><div class="metric"><span>Dias estimados de viagem</span><span>${dias}</span></div><div class="metric"><span>Custo diesel</span><span>${money(cDiesel)}</span></div><div class="metric"><span>Custo de capital (veículo)</span><span>${money(capitalViagem)}</span></div><div class="metric"><span>Salário + encargos</span><span>${money(salarioViagem)}</span></div><div class="metric"><span>Desgaste de pneu</span><span>${money(custoPneu)}</span></div><div class="metric"><span>Custo total estimado</span><span>${money(custo)}</span></div><div class="metric"><span>Cascalho no bolso</span><span class="${cls}">${money(cas)}</span></div>${st}<div class="qraResultPrimaryActions" style="margin-top:16px"><button type="button" class="btn sec" onclick="fecharCustoReal()">← Voltar pro resultado</button><button type="button" class="btn sec" onclick="fecharCustoRealENovo()">↻ NOVO FRETE</button></div>`;
+  let cls=cas>0?'oktxt':'badtxt',st=cas>0?'<div class="status ok">Com o valor ofertado, sobra cascalho no bolso.</div>':'<div class="status bad">Com o valor ofertado, o custo estimado supera o frete.</div>';
+  $('custoResultado').innerHTML=`<h3>Resultado financeiro</h3><div class="metric"><span>Valor ofertado / negociado</span><span>${money(valor)}</span></div><div class="metric"><span>Dias estimados de viagem</span><span>${dias}</span></div><div class="metric"><span>Custo diesel</span><span>${money(cDiesel)}</span></div><div class="metric"><span>Custo de capital (veículo)</span><span>${money(capitalViagem)}</span></div><div class="metric"><span>Salário + encargos</span><span>${money(salarioViagem)}</span></div><div class="metric"><span>Desgaste de pneu</span><span>${money(custoPneu)}</span></div><div class="metric"><span>Custo total estimado</span><span>${money(custo)}</span></div><div class="metric"><span>Cascalho no bolso</span><span class="${cls}">${money(cas)}</span></div>${st}<div class="qraResultPrimaryActions" style="margin-top:16px"><button type="button" class="btn sec" onclick="fecharCustoReal()">← Voltar pro resultado</button><button type="button" class="btn sec" onclick="fecharCustoRealENovo()">↻ NOVO FRETE</button></div>`;
   let h=jget(LS.hist,[]);if(h.length&&h[0].desc===l.desc&&Math.abs(h[0].km-l.km)<.1){h[0].custo=custo;h[0].cas=cas;jset(LS.hist,h)}
   setTimeout(()=>$('custoResultado').scrollIntoView({behavior:'smooth',block:'start'}),40);
 }
