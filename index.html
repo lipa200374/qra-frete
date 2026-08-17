@@ -1445,29 +1445,7 @@ label{color:#8d9bae!important}
   #qraCalcStage2 .qraConfirmCalculate{min-height:52px!important}
 }
 </style>
-<style id="qra-cost-final-fit-safe">
-/* Cascalho: compactação visual sem usar CSS zoom (mais seguro no iPhone/Safari). */
-@media (max-width:699px){
-  #custoBox:not(.hide){padding:64px 14px calc(94px + env(safe-area-inset-bottom))!important;scroll-padding-top:72px!important}
-  #custoResultado{zoom:1!important;margin-top:8px!important;padding:15px 13px!important;border-radius:19px!important;scroll-margin-top:72px!important}
-  #custoResultado>h3{margin:0 0 9px!important;font-size:9px!important;letter-spacing:1.6px!important}
-  #custoResultado>.qraCascalhoHero{padding:10px!important;margin:0 0 6px!important;border-radius:17px!important}
-  #custoResultado>.qraCascalhoHero span:first-child{font-size:9px!important;margin-bottom:2px!important}
-  #custoResultado>.qraCascalhoHero span:last-child{font-size:23px!important;letter-spacing:-.4px!important}
-  #custoResultado>.metric:not(.qraCascalhoHero){padding:8px 0!important;font-size:12px!important}
-  #custoResultado>.metric:not(.qraCascalhoHero) span:first-child{font-size:11px!important}
-  #custoResultado>.metric:not(.qraCascalhoHero) span:last-child{font-size:12.5px!important}
-  #custoResultado>.status,#custoResultado>.notice{padding:9px 11px!important;margin:9px 0 3px!important;font-size:11px!important}
-  #custoResultado .qraResultPrimaryActions{margin-top:10px!important;gap:7px!important}
-  #custoResultado .qraResultPrimaryActions .btn{min-height:43px!important;padding:9px 10px!important;font-size:12.5px!important;border-radius:14px!important}
-}
-@media (max-width:699px) and (max-height:820px){
-  #custoBox:not(.hide){padding-top:62px!important;scroll-padding-top:70px!important}
-  #custoResultado{margin-top:6px!important;padding:13px 12px!important;scroll-margin-top:70px!important}
-  #custoResultado>.metric:not(.qraCascalhoHero){padding:7px 0!important}
-  #custoResultado .qraResultPrimaryActions .btn{min-height:41px!important}
-}
-</style>
+
 
 </head>
 <body>
@@ -2973,6 +2951,11 @@ if('serviceWorker' in navigator){
 
   let qraCalcStage=1;
   let qraStageTimer=null;
+  function qraResetViewportTop(){
+    try{window.scrollTo(0,0)}catch(e){}
+    try{document.documentElement.scrollTop=0}catch(e){}
+    try{document.body.scrollTop=0}catch(e){}
+  }
   window.qraCalcGoStage=function(n){
     n=Number(n);
     if(n!==3)try{window.qraFecharResultadoPortal&&window.qraFecharResultadoPortal()}catch(e){}
@@ -2992,7 +2975,9 @@ if('serviceWorker' in navigator){
     if(n===2){
       qraApplyTripDefaults();
       const d=document.getElementById('qraOperationDetails');if(d)d.open=true;
-      setTimeout(()=>{qraUpdateOperationSummary();window.scrollTo({top:0,left:0,behavior:'smooth'})},20);
+      qraResetViewportTop();
+      requestAnimationFrame(()=>requestAnimationFrame(qraResetViewportTop));
+      setTimeout(()=>{qraUpdateOperationSummary();qraResetViewportTop()},40);
     } else if(n===1){
       if(res&&!res.classList.contains('hide')){res.classList.add('hide');res.innerHTML=''}
       setTimeout(()=>window.scrollTo({top:0,left:0,behavior:'smooth'}),10);
