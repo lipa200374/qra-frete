@@ -1421,6 +1421,71 @@ label{color:#8d9bae!important}
 .qraAccessCard{border:1px solid rgba(255,106,0,.22)!important;background:linear-gradient(180deg,rgba(255,106,0,.055),rgba(255,255,255,.018))!important}.qraAccessCard .btn{margin-top:10px}.qraDangerZone{margin-top:12px!important;border:1px solid rgba(255,99,99,.18)!important}.qraDangerZone h3{color:#ffc2c2!important}.qraDangerZone .btn.bad{margin-top:8px}.qraPlanPrice{font-weight:900;color:#fff}
 .qraLegalLinks{display:flex;align-items:center;justify-content:center;gap:9px;flex-wrap:wrap;margin:14px 0 2px;font-size:11px;color:#718096}.qraLegalLinks a{color:#98a8b9;text-decoration:none}.qraLegalLinks a:hover{text-decoration:underline;color:#ff8a3d}
 </style>
+
+<style id="qra-stage2-final-fit">
+/* QRA FRETE — ajuste cirúrgico final da Etapa 2.
+   Só compacta ritmo vertical em celular; não altera motor, fontes-base ou áreas funcionais. */
+@media (max-width:699px){
+  #sCalc .qraCalcShell.qraStageTwo{
+    padding-top:0!important;
+    padding-bottom:calc(78px + env(safe-area-inset-bottom))!important;
+  }
+  #sCalc .qraCalcShell.qraStageTwo .qraPremiumCalcStepper{
+    padding-top:2px!important;
+    padding-bottom:10px!important;
+  }
+  #qraCalcStage2{
+    padding-bottom:4px!important;
+  }
+  #qraCalcStage2 .qraStageTop{
+    margin-bottom:8px!important;
+  }
+  #qraCalcStage2 .qraStageTop p{
+    margin-top:2px!important;
+    line-height:1.25!important;
+  }
+  #qraCalcStage2 .qraInlineChoices{
+    margin-bottom:8px!important;
+  }
+  #qraCalcStage2 .qraInlineChoices .qraAdvancedBody{
+    gap:8px!important;
+  }
+  #qraCalcStage2 .qraChoiceField{
+    min-height:clamp(56px,6.9vh,64px)!important;
+    padding:7px 12px 8px!important;
+  }
+  #qraCalcStage2 .qraChoiceField label{
+    margin-bottom:3px!important;
+  }
+  #qraCalcStage2 .qraConfirmCalculate{
+    min-height:54px!important;
+  }
+}
+/* Aparelhos mais baixos recebem só mais um pequeno aperto, sem diminuir legibilidade. */
+@media (max-width:699px) and (max-height:820px){
+  #sCalc .qraCalcShell.qraStageTwo .qraPremiumCalcStepper{
+    padding-bottom:7px!important;
+  }
+  #qraCalcStage2 .qraStageTop{
+    margin-bottom:6px!important;
+  }
+  #qraCalcStage2 .qraInlineChoices .qraAdvancedBody{
+    gap:6px!important;
+  }
+  #qraCalcStage2 .qraChoiceField{
+    min-height:54px!important;
+    padding-top:6px!important;
+    padding-bottom:7px!important;
+  }
+  #qraCalcStage2 .qraInlineChoices{
+    margin-bottom:6px!important;
+  }
+  #qraCalcStage2 .qraConfirmCalculate{
+    min-height:52px!important;
+  }
+}
+</style>
+
 </head>
 <body>
 <div class="app">
