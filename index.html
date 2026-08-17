@@ -1606,6 +1606,23 @@ label{color:#8d9bae!important}
 </section>
 
 </main>
+
+<!-- Portal real do resultado.
+     O JavaScript qraAbrirResultadoPortal() depende destes dois elementos.
+     Sem eles, o resultado era calculado e salvo no histórico, mas permanecia
+     dentro da Etapa 3 oculta (display:none). -->
+<div id="qraResultPortal" class="qraResultPortal hide" role="dialog" aria-modal="true" aria-labelledby="qraResultPortalHeading">
+  <div class="qraResultPortalInner">
+    <div class="qraResultPortalTop">
+      <div class="qraResultPortalTitle">
+        <span>QRA FRETE</span>
+        <b id="qraResultPortalHeading">Resultado do frete</b>
+      </div>
+    </div>
+    <div id="qraResultMount"></div>
+  </div>
+</div>
+
 <nav class="tabs"><button class="tab on" onclick="go('Calc',this)"><span class="tabIco">🧮</span><span>Calcular</span></button><button class="tab" onclick="go('Hist',this)"><span class="tabIco">🕘</span><span>Viagens</span></button><button class="tab" onclick="go('Cad',this)"><span class="tabIco">👤</span><span>Perfil</span></button><div class="homeIndicator"><span></span></div></nav></div>
 <script src="/vendor/supabase.js"></script>
 <script>
