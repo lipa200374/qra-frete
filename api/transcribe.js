@@ -1,4 +1,7 @@
+const { exigirUsuarioLogado } = require('./_auth');
 module.exports = async function handler(req, res) {
+  try { await exigirUsuarioLogado(req); } catch (e) { res.status(e.status || 401).json({ error: e.message || 'Não autorizado.' }); return; }
+
   if (req.method !== 'POST') {
     res.status(405).json({ error: 'Método não permitido.' });
     return;

@@ -1,0 +1,12 @@
+QRA FRETE — BANCO DE DADOS ATUALIZADO EM 17/08/2026
+
+Aplicado no projeto Supabase eexfcwcxjppbmzigyris:
+1. Modelo de acesso anual:
+   - tabela public.acessos_qra
+   - 3 cálculos gratuitos para contas em trial
+   - acesso anual ativo ignora consumo de créditos
+   - admin_liberar_acesso_anual: +12 meses
+   - admin_ajustar_acesso_dias: ajuste manual
+   - admin_revogar_acesso: revogação administrativa
+2. Tabela public.solicitacoes_exclusao para solicitações externas de exclusão.
+3. Estrutura antiga de créditos foi preservada para histórico/auditoria, mas o modelo comercial principal passa a ser acesso anual.

@@ -1,0 +1,22 @@
+[ ] Deploy web candidato feito
+[ ] api/transcribe.js protegido por autenticação
+[ ] APIs FIPE e Puxaplaca removidas
+[ ] banco parceiro removido do primeiro lançamento
+[ ] promoções gerais continuam funcionando
+[ ] política de privacidade atualizada e publicada
+[ ] termos.html publicado e testado
+[ ] links Privacidade / Termos / Exclusão testados
+[ ] botão de exclusão de conta testado
+[ ] /exclusao.html publicado e testado
+[ ] produto qra_acesso_anual_12m criado e ativo no Play Console
+[ ] service account Google Play configurada na Vercel
+[ ] package com.qrafrete.app confirmado
+[ ] Bubblewrap >=1.25.0
+[ ] targetSdkVersion 36 confirmado
+[ ] SHA-256 da APP SIGNING KEY do Play Console publicado em /.well-known/assetlinks.json
+[ ] vercel.json publicado com header no-cache para /sw.js
+[ ] AAB gerado
+[ ] teste de compra Google Play concluído
+[ ] closed testing com 12 motoristas por 14 dias, se aplicável à conta
+[ ] produção aprovada
+[ ] só então abrir tráfego

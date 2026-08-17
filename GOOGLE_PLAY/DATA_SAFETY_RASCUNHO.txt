@@ -1,0 +1,35 @@
+QRA FRETE — RASCUNHO PARA DATA SAFETY (REVISAR NO PLAY CONSOLE)
+Data: 17/08/2026
+
+Este arquivo é guia de preenchimento, não substitui as perguntas exibidas pelo Play Console. Responder conforme o comportamento efetivamente publicado.
+
+DADOS PRESENTES NO FLUXO ATUAL
+- Nome/QRA e telefone: dados pessoais usados para conta/autenticação/suporte.
+- Histórico de cálculos: origem, destino, distância, carga, eixos, valor oferecido e resultado ANTT; usado para funcionalidade e histórico.
+- Custo Real opcional: valor do caminhão, pneus, diesel e consumo; informado pelo usuário para cálculo e conveniência.
+- Áudio: somente quando o usuário ativa comando de voz; enviado para transcrição OpenAI/Whisper.
+- Compra Google Play: o pagamento é feito pela Google Play; o QRA registra apenas metadados necessários à validação e ao direito de acesso (produto/token/pedido/validade), sem número de cartão ou conta bancária.
+
+LOCALIZAÇÃO
+- O app NÃO solicita permissão de GPS no fluxo atual.
+- Origem/destino são cidades informadas/selecionadas pelo usuário para cálculo de rota. Não declarar GPS/coleta automática de localização se isso continuar verdadeiro na versão enviada.
+
+TERCEIROS / PRESTADORES
+- Supabase: autenticação, perfis, histórico, acesso.
+- Geoapify: geocodificação e rotas.
+- OpenAI/Whisper: transcrição do áudio opcional.
+- Vercel: hospedagem e APIs server-side.
+- Resend: notificações operacionais.
+- Google Play: distribuição, compra e validação de produtos digitais.
+- Parceiros comerciais: somente quando houver interação voluntária com promoção e conforme fluxo exibido ao usuário.
+
+NÃO USADOS NO FLUXO ATUAL
+- FIPE/Parallelum.
+- Puxaplaca.
+- Banco parceiro no primeiro lançamento.
+
+ANTES DE ENVIAR
+[ ] Conferir se nenhuma permissão Android adiciona GPS/contatos/câmera sem necessidade.
+[ ] Conferir se áudio é tratado como coleta/compartilhamento conforme as perguntas exatas do Play Console.
+[ ] Conferir compra/entitlement como histórico de compra, se o formulário perguntar por esse tipo.
+[ ] Conferir política de retenção e exclusão de conta.
