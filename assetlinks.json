@@ -1,8 +1,16 @@
-[{
-      "relation": ["delegate_permission/common.handle_all_urls"],
-      "target": {
-        "namespace": "android_app",
-        "package_name": "app.vercel.qrafretevercel_25.twa",
-        "sha256_cert_fingerprints": ["7D:5A:AA:7E:29:9F:37:37:71:98:35:B6:56:EC:B2:97:EA:63:60:E1:72:6A:C7:FA:60:5E:39:D5:FA:79:D0:9B"]
-      }
-    }]
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.qrafrete.app",
+      "sha256_cert_fingerprints": [
+        "79:79:A0:68:8B:E6:3A:7C:D2:66:E5:1C:84:A9:AA:C8:B7:4F:4F:78:7F:26:3B:E6:F7:70:5B:51:0C:DE:A0:D6",
+        "CE:39:28:52:00:3C:C8:B1:69:DE:B2:E3:10:CB:ED:EF:06:ED:4D:37:8C:F4:9E:AC:6B:30:BB:AF:F6:E9:D0:4E",
+        "F6:C6:10:6D:68:73:B4:B1:24:DE:04:0B:00:7C:C5:D6:E4:81:1D:00:81:05:53:36:33:71:CC:A9:21:0B:F2:B9"
+      ]
+    }
+  }
+]
