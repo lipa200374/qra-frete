@@ -1,1 +1,173 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Exclusão de conta — QRA FRETE</title><style>body{font-family:Inter,Arial,sans-serif;background:#0a0e1a;color:#f8fafc;margin:0;padding:28px}main{max-width:640px;margin:auto;background:#111726;border:1px solid #1e2638;border-radius:18px;padding:24px}h1{color:#ff6600}label{display:block;margin:14px 0 6px;color:#aab4c2}input{width:100%;box-sizing:border-box;padding:13px;border-radius:12px;border:1px solid #29344a;background:#0a0e1a;color:white}button{margin-top:18px;width:100%;padding:14px;border:0;border-radius:12px;background:#ff6600;font-weight:800}p{line-height:1.55;color:#c7ced8}.ok{color:#75e7a8}</style></head><body><main><h1>Excluir conta QRA FRETE</h1><p>Se você ainda consegue entrar no aplicativo, use <b>Perfil → Excluir minha conta</b> para exclusão imediata. Se não consegue acessar o app, envie uma solicitação abaixo. Confirmaremos a titularidade antes da exclusão.</p><label>Nome ou QRA</label><input id="nome"><label>Telefone cadastrado</label><input id="telefone" inputmode="tel" placeholder="(00) 00000-0000"><button onclick="pedir()">SOLICITAR EXCLUSÃO</button><p id="msg"></p><p>Também é possível solicitar pelo e-mail <b>comercial@ragagi.com.br</b>.</p><p><a href="privacidade.html" style="color:#ff8a3d">Política de Privacidade</a> · <a href="termos.html" style="color:#ff8a3d">Termos de Uso</a></p></main><script>async function pedir(){const msg=document.getElementById('msg');msg.textContent='Enviando...';try{const r=await fetch('/api/request-delete',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nome:document.getElementById('nome').value,telefone:document.getElementById('telefone').value})});const d=await r.json();if(!r.ok)throw Error(d.error||'Falha');msg.className='ok';msg.textContent='Solicitação registrada. Entraremos em contato para confirmar a titularidade.'}catch(e){msg.className='';msg.textContent=e.message||'Não foi possível enviar.'}}</script></body></html>
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Exclusão de conta — QRA FRETE</title>
+
+  <style>
+    body{
+      font-family:Inter,Arial,sans-serif;
+      background:#0a0e1a;
+      color:#f8fafc;
+      margin:0;
+      padding:28px
+    }
+    main{
+      max-width:640px;
+      margin:auto;
+      background:#111726;
+      border:1px solid #1e2638;
+      border-radius:18px;
+      padding:24px
+    }
+    h1{color:#ff6600}
+    h2{
+      margin-top:26px;
+      font-size:20px;
+      color:#f8fafc
+    }
+    label{
+      display:block;
+      margin:14px 0 6px;
+      color:#aab4c2
+    }
+    input{
+      width:100%;
+      box-sizing:border-box;
+      padding:13px;
+      border-radius:12px;
+      border:1px solid #29344a;
+      background:#0a0e1a;
+      color:white
+    }
+    button{
+      margin-top:18px;
+      width:100%;
+      padding:14px;
+      border:0;
+      border-radius:12px;
+      background:#ff6600;
+      font-weight:800
+    }
+    p,li{
+      line-height:1.55;
+      color:#c7ced8
+    }
+    .ok{color:#75e7a8}
+    .info{
+      background:#0a0e1a;
+      border:1px solid #29344a;
+      border-radius:12px;
+      padding:14px;
+      margin:14px 0
+    }
+    a{color:#ff8a3d}
+  </style>
+</head>
+
+<body>
+<main>
+
+  <h1>Excluir conta QRA FRETE</h1>
+
+  <p>
+    Se você ainda consegue entrar no aplicativo, use
+    <b>Perfil → Excluir minha conta</b> para solicitar a exclusão diretamente pelo QRA FRETE.
+    Se não consegue acessar o app, envie uma solicitação pelo formulário abaixo.
+    Confirmaremos a titularidade antes da exclusão.
+  </p>
+
+  <h2>O que será excluído</h2>
+
+  <div class="info">
+    <p>
+      Após a confirmação da titularidade e a conclusão da exclusão,
+      o QRA FRETE excluirá os dados associados à conta sujeitos à exclusão,
+      incluindo:
+    </p>
+
+    <ul>
+      <li>nome ou QRA;</li>
+      <li>telefone cadastrado;</li>
+      <li>dados e identificadores de autenticação;</li>
+      <li>preferências vinculadas à conta;</li>
+      <li>histórico de cálculos de frete;</li>
+      <li>dados de origem, destino, rotas e parâmetros de cálculos vinculados ao usuário;</li>
+      <li>dados de Custo Real salvos pelo usuário, quando existentes;</li>
+      <li>metadados de acesso e de compras mantidos pelo QRA FRETE, quando aplicável.</li>
+    </ul>
+
+    <p>
+      <b>Período adicional de armazenamento:</b>
+      não há retenção adicional voluntária desses dados após a conclusão da exclusão.
+      Somente informações que precisem ser preservadas por obrigação legal ou regulatória,
+      segurança, prevenção à fraude ou exercício regular de direitos poderão ser mantidas
+      pelo prazo estritamente necessário ou exigido para essa finalidade.
+      Depois desse período, serão eliminadas ou anonimizadas.
+    </p>
+  </div>
+
+  <h2>Solicitar exclusão</h2>
+
+  <label>Nome ou QRA</label>
+  <input id="nome">
+
+  <label>Telefone cadastrado</label>
+  <input
+    id="telefone"
+    inputmode="tel"
+    placeholder="(00) 00000-0000"
+  >
+
+  <button onclick="pedir()">SOLICITAR EXCLUSÃO</button>
+
+  <p id="msg"></p>
+
+  <p>
+    Também é possível solicitar pelo e-mail
+    <b>comercial@ragagi.com.br</b>.
+  </p>
+
+  <p>
+    <a href="privacidade.html">Política de Privacidade</a>
+    ·
+    <a href="termos.html">Termos de Uso</a>
+  </p>
+
+</main>
+
+<script>
+async function pedir(){
+  const msg = document.getElementById('msg');
+  msg.textContent = 'Enviando...';
+
+  try{
+    const r = await fetch('/api/request-delete',{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json'
+      },
+      body:JSON.stringify({
+        nome:document.getElementById('nome').value,
+        telefone:document.getElementById('telefone').value
+      })
+    });
+
+    const d = await r.json();
+
+    if(!r.ok){
+      throw Error(d.error || 'Falha');
+    }
+
+    msg.className='ok';
+    msg.textContent='Solicitação registrada. Entraremos em contato para confirmar a titularidade.';
+  }catch(e){
+    msg.className='';
+    msg.textContent=e.message || 'Não foi possível enviar.';
+  }
+}
+</script>
+
+</body>
+</html>
