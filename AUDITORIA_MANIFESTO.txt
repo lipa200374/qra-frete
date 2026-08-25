@@ -1,0 +1,17 @@
+QRA FRETE — PACOTE PARA AUDITORIA
+Data de preparação: 19/08/2026
+
+Escopo:
+- Aplicação web/PWA do QRA FRETE e APIs Vercel incluídas no pacote.
+- Base funcional congelada do app + atualização do index final.
+- assetlinks.json atualizado para package com.qrafrete.app com os certificados do Google Play.
+- exclusao.html atualizado conforme exigências de exclusão de conta/dados do Google Play.
+
+Produção:
+- Domínio: https://www.qrafrete.com
+- Android package: com.qrafrete.app
+- Versão enviada ao Google Play: 1.0.0 (versionCode 1)
+
+Observações para auditoria:
+- Credenciais e segredos de produção devem estar em variáveis de ambiente da hospedagem e não devem ser incluídos no código-fonte.
+- O pacote não inclui node_modules, dados reais de usuários, chaves privadas nem credenciais de contas.

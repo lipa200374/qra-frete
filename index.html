@@ -1423,6 +1423,7 @@ label{color:#8d9bae!important}
 
 /* Etapa 2: remove somente o logo do cabeçalho para ganhar respiro vertical/visual.
    Título QRA FRETE e botão Sair permanecem. Login e demais telas não são afetados. */
+body:has(#qraCalcStage2.on) header .logoMark{display:none!important}
 body:has(#qraCalcStage2.on) header .head{gap:0!important}
 </style>
 
@@ -2620,28 +2621,54 @@ async function atualizarContadorCreditos(){
 const QRA_PLAY_SKU='qra_acesso_anual_12m';
 async function comprarAcessoAnual(){
   try{
-    if(!('getDigitalGoodsService' in window)){
-      alert('A compra de 12 meses estará disponível dentro do aplicativo QRA FRETE instalado pela Google Play.');
+    // Dentro do app instalado pela Google Play, mantém exclusivamente o Google Play Billing.
+    if('getDigitalGoodsService' in window){
+      const service=await window.getDigitalGoodsService('https://play.google.com/billing');
+      const details=await service.getDetails([QRA_PLAY_SKU]);
+      if(!details||!details.length)throw Error('Produto anual ainda não está disponível na Google Play.');
+      const request=new PaymentRequest([{supportedMethods:'https://play.google.com/billing',data:{sku:QRA_PLAY_SKU}}],{total:{label:'QRA FRETE — 12 meses',amount:{currency:'BRL',value:'0'}}});
+      const response=await request.show();
+      const purchaseToken=response?.details?.purchaseToken||response?.details?.token;
+      if(!purchaseToken)throw Error('A Google Play não retornou o token da compra.');
+      const r=await fetch('/api/play-purchase',{method:'POST',headers:{'Content-Type':'application/json',...(await authHeaders())},body:JSON.stringify({productId:QRA_PLAY_SKU,purchaseToken})});
+      const d=await r.json().catch(()=>({}));
+      if(!r.ok||!d.ok){try{await response.complete('fail')}catch(_){ }throw Error(d.error||'Não foi possível validar a compra.');}
+      try{await response.complete('success')}catch(_){ }
+      await atualizarContadorCreditos();
+      alert(`Pronto! Seu QRA FRETE está liberado até ${new Date(d.acesso_ate).toLocaleDateString('pt-BR')}.`);
       return;
     }
-    const service=await window.getDigitalGoodsService('https://play.google.com/billing');
-    const details=await service.getDetails([QRA_PLAY_SKU]);
-    if(!details||!details.length)throw Error('Produto anual ainda não está disponível na Google Play.');
-    const request=new PaymentRequest([{supportedMethods:'https://play.google.com/billing',data:{sku:QRA_PLAY_SKU}}],{total:{label:'QRA FRETE — 12 meses',amount:{currency:'BRL',value:'0'}}});
-    const response=await request.show();
-    const purchaseToken=response?.details?.purchaseToken||response?.details?.token;
-    if(!purchaseToken)throw Error('A Google Play não retornou o token da compra.');
-    const r=await fetch('/api/play-purchase',{method:'POST',headers:{'Content-Type':'application/json',...(await authHeaders())},body:JSON.stringify({productId:QRA_PLAY_SKU,purchaseToken})});
-    const d=await r.json().catch(()=>({}));
-    if(!r.ok||!d.ok){try{await response.complete('fail')}catch(_){ }throw Error(d.error||'Não foi possível validar a compra.');}
-    try{await response.complete('success')}catch(_){ }
-    await atualizarContadorCreditos();
-    alert(`Pronto! Seu QRA FRETE está liberado até ${new Date(d.acesso_ate).toLocaleDateString('pt-BR')}.`);
+
+    // Navegador / iPhone / web: Checkout Asaas (Pix ou cartão).
+    const btn=document.getElementById('qraBuyAnnualBtn');
+    const antigo=btn?.textContent;
+    if(btn){btn.disabled=true;btn.textContent='ABRINDO PAGAMENTO...'}
+    try{
+      const r=await fetch('/api/asaas-checkout',{method:'POST',headers:{'Content-Type':'application/json',...(await authHeaders())},body:'{}'});
+      const d=await r.json().catch(()=>({}));
+      if(!r.ok||!d.ok||!d.url)throw Error(d.error||'Não foi possível iniciar o pagamento.');
+      window.location.href=d.url;
+    }finally{
+      if(btn){btn.disabled=false;btn.textContent=antigo||'LIBERAR 12 MESES — R$ 119,90'}
+    }
   }catch(e){
     if(e&&e.name==='AbortError')return;
     console.error(e);alert(e.message||'Não foi possível concluir a compra.');
   }
 }
+
+async function qraTratarRetornoPagamento(){
+  try{
+    const p=new URLSearchParams(location.search);const st=p.get('pagamento');if(!st)return;
+    history.replaceState({},'',location.pathname+location.hash);
+    if(st==='sucesso'){
+      alert('Pagamento concluído. A confirmação será validada automaticamente pelo Asaas. Seu acesso será atualizado em instantes.');
+      for(let i=0;i<6;i++){await new Promise(r=>setTimeout(r,i?2500:500));const a=await atualizarContadorCreditos();if(a?.acessoAtivo)break;}
+    }else if(st==='cancelado')alert('Pagamento cancelado. Nenhuma cobrança foi concluída.');
+    else if(st==='expirado')alert('O link de pagamento expirou. Você pode gerar um novo quando quiser.');
+  }catch(e){console.warn('Retorno de pagamento:',e)}
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',qraTratarRetornoPagamento);else qraTratarRetornoPagamento();
 
 async function excluirMinhaConta(){
   if(!confirm('Excluir sua conta QRA FRETE permanentemente? Seu cadastro, histórico e dados associados serão apagados.'))return;

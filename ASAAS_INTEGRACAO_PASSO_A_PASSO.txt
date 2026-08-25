@@ -1,0 +1,46 @@
+QRA FRETE — INTEGRAÇÃO ASAAS — PASSOS DE PUBLICAÇÃO
+
+1) SUPABASE
+- Abra o SQL Editor do projeto do QRA FRETE.
+- Execute uma única vez o arquivo SUPABASE_ASAAS_MIGRACAO.sql.
+- O SQL cria a tabela de checkouts e a função transacional/idempotente que concede +12 meses.
+
+2) VERCEL — projeto qrafretevercel-25
+Variável já criada pelo usuário:
+- ASAAS_API_KEY = chave de produção Asaas
+
+Criar também:
+- ASAAS_WEBHOOK_TOKEN = uma senha longa e aleatória, usada SOMENTE para autenticar o webhook.
+  Exemplo de formato: gere 40+ caracteres aleatórios. Não reutilize senha pessoal.
+- Manter SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY e QRA_WEBHOOK_SECRET existentes.
+
+3) DEPLOY
+- Subir este pacote no projeto qrafretevercel-25.
+- O endpoint público do webhook ficará em:
+  https://www.qrafrete.com/api/asaas-webhook
+- O endpoint interno de criação do checkout fica em:
+  https://www.qrafrete.com/api/asaas-checkout
+
+4) ASAAS > INTEGRAÇÕES > WEBHOOKS
+Criar Webhook:
+- Nome: QRA FRETE - CHECKOUT
+- URL: https://www.qrafrete.com/api/asaas-webhook
+- Token de autenticação: o MESMO valor de ASAAS_WEBHOOK_TOKEN do Vercel
+- Tipo de envio: sequencial
+- Ativo: sim
+- Evento necessário: CHECKOUT_PAID
+  (opcionalmente também CHECKOUT_CREATED, CHECKOUT_CANCELED e CHECKOUT_EXPIRED; o endpoint ignora os não pagos)
+
+5) TESTE
+- Entrar no qrafrete.com com usuário de teste.
+- Em Perfil, clicar LIBERAR 12 MESES — R$ 119,90.
+- Fora do app Google Play, o site abre Checkout Asaas com PIX + cartão, cobrança única.
+- Dentro da TWA Google Play, o código continua usando exclusivamente Google Play Billing.
+- O acesso só é liberado após CHECKOUT_PAID recebido e validado pelo webhook.
+
+SEGURANÇA IMPLEMENTADA
+- Chave Asaas fica somente no backend Vercel.
+- Checkout exige usuário autenticado no Supabase.
+- Webhook exige header de autenticação Asaas.
+- Valor e tipo da cobrança são validados no webhook.
+- Concessão de acesso usa função SQL transacional e idempotente para evitar +12 meses duplicados em reenvios do mesmo evento.
