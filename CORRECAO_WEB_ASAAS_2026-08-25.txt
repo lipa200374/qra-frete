@@ -1,0 +1,8 @@
+QRA FRETE — CORREÇÃO WEB ASAAS — 25/08/2026
+
+Correção aplicada:
+- O payload do Asaas já estava correto: billingTypes [PIX, CREDIT_CARD] e chargeTypes [DETACHED].
+- O erro "unsupported payment method" vinha do front-end: o Chrome web era interpretado como Google Play Billing apenas por expor getDigitalGoodsService.
+- Agora Google Play Billing é usado somente quando a página foi aberta pela TWA oficial com referrer android-app://com.qrafrete.app.
+- Navegador normal, desktop, Android fora da loja e iPhone seguem diretamente para Checkout Asaas.
+- Webhook/Supabase/valor R$119,90 permanecem inalterados.

@@ -2619,10 +2619,24 @@ async function atualizarContadorCreditos(){
 }
 
 const QRA_PLAY_SKU='qra_acesso_anual_12m';
+function qraEstaDentroDoAppGooglePlay(){
+  try{
+    const ref=String(document.referrer||'');
+    if(ref.startsWith('android-app://com.qrafrete.app')){
+      sessionStorage.setItem('qra_play_twa','1');
+      return true;
+    }
+    return sessionStorage.getItem('qra_play_twa')==='1';
+  }catch(_){return false}
+}
 async function comprarAcessoAnual(){
   try{
-    // Dentro do app instalado pela Google Play, mantém exclusivamente o Google Play Billing.
-    if('getDigitalGoodsService' in window){
+    // Google Play Billing SOMENTE dentro da TWA oficial do app.
+    // Alguns navegadores Chrome expõem APIs relacionadas a Digital Goods fora da TWA;
+    // usar apenas feature detection fazia o site web tentar Play Billing e gerar
+    // "unsupported payment method". No navegador comum, seguimos direto para Asaas.
+    if(qraEstaDentroDoAppGooglePlay()){
+      if(!('getDigitalGoodsService' in window))throw Error('Google Play Billing não está disponível neste ambiente.');
       const service=await window.getDigitalGoodsService('https://play.google.com/billing');
       const details=await service.getDetails([QRA_PLAY_SKU]);
       if(!details||!details.length)throw Error('Produto anual ainda não está disponível na Google Play.');
